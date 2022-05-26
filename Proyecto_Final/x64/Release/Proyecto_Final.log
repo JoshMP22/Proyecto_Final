@@ -1,0 +1,15 @@
+﻿  Proyecto_Final.cpp
+C:\Users\morat\OneDrive\Escritorio\C++\PROYECTO FINAL\Proyecto_Final - copia\Proyecto_Final\Ventas.h(137,1): warning C4267: '=': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\morat\OneDrive\Escritorio\C++\PROYECTO FINAL\Proyecto_Final - copia\Proyecto_Final\Ventas.h(126,15): warning C4101: 'produc': variable local sin referencia
+  Ventas.cpp
+C:\Users\morat\OneDrive\Escritorio\C++\PROYECTO FINAL\Proyecto_Final - copia\Proyecto_Final\Ventas.h(137,1): warning C4267: '=': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\morat\OneDrive\Escritorio\C++\PROYECTO FINAL\Proyecto_Final - copia\Proyecto_Final\Ventas.h(126,15): warning C4101: 'produc': variable local sin referencia
+  Ventas_detalles.cpp
+C:\Users\morat\OneDrive\Escritorio\C++\PROYECTO FINAL\Proyecto_Final - copia\Proyecto_Final\Ventas.h(137,1): warning C4267: '=': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\morat\OneDrive\Escritorio\C++\PROYECTO FINAL\Proyecto_Final - copia\Proyecto_Final\Ventas.h(126,15): warning C4101: 'produc': variable local sin referencia
+  Generando código
+  1 of 210 functions ( 0.5%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
+  Generación de código finalizada
+  Proyecto_Final.vcxproj -> C:\Users\morat\OneDrive\Escritorio\C++\PROYECTO FINAL\Proyecto_Final - copia\x64\Release\Proyecto_Final.exe
