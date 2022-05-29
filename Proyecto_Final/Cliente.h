@@ -14,7 +14,7 @@ private: string nit; int buscador = 0, idcliente = 0;
 public:
 	Cliente() {
 	}
-	Cliente(string nom, string ape, string gen, int tel, string ce, string fi, string n) : Persona(nom, ape, gen, tel, ce, fi) {
+	Cliente(string nom, string ape, string gen, string tel, string ce, string fi, string n) : Persona(nom, ape, gen, tel, ce, fi) {
 		nit = n;
 	}
 
@@ -23,16 +23,16 @@ public:
 	void setNombres(string nom) { nombres = nom; }
 	void setApellidos(string ape) { apellidos = ape; }
 	void setGenero(string gen) { genero = gen; }
-	void setTelefono(int tel) { telefono = tel; }
-	void setCorreo_Electronico(int ce) { correo_electronico = ce; }
-	void setFecha_Ingreso(int fi) { fecha_ingreso = fi; }
+	void setTelefono(string tel) { telefono = tel; }
+	void setCorreo_Electronico(string ce) { correo_electronico = ce; }
+	void setFecha_Ingreso(string fi) { fecha_ingreso = fi; }
 	
 	string getNit() { return nit; }
 	string getNombres() { return nombres; }
 	string getApellidos() { return apellidos; }
 	string getGenero() { return genero; }
 	string getCorreo_Electronico() { return correo_electronico; }
-	int getTelefono() { return telefono; }
+	string getTelefono() { return telefono; }
 	string getFecha_Ingreso() { return fecha_ingreso; }
 
 	void crear() {
@@ -44,7 +44,7 @@ public:
 
 		if (cn.getConectar()) {
 
-			string  insertar = "INSERT INTO clientes(nombres,apellidos,genero,telefono,correo_electronico,fecha_ingreso,nit) VALUES ('" + nombres + "','" + apellidos + "','" + genero + "'," + t + "," + correo_electronico + ",'" + fecha_ingreso + "','" + nit + "')";
+			string insert = "INSERT INTO empresa_c.clientes(nombres, apellidos, NIT, genero, telefono, correo_electronico, fechaingreso) VALUES(" + nombres + ",'" + apellidos + "','" + NIT + "', " + genero + ", '" + telefono + "', '" + correo_electronico + "', current_time() )";
 			
 			const char* i = insertar.c_str();
 			q_estado = mysql_query(cn.getConectar(), i);
@@ -124,7 +124,7 @@ public:
 				cout << endl << " INGRESE LOS NOMBRES CORRECTOS:   ";
 				getline(cin, nombres);
 				string id = to_string(idcliente);
-				string update = "UPDATE empresa_c.cliente SET nombres = " + nombres + " WHERE(idcliente = " + id + ")";
+				string update = "UPDATE empresa_c.cliente SET nombres = '" + nombres + "' WHERE(idcliente = " + id + ")";
 				const char* i = update.c_str();
 				q_estado = mysql_query(cn.getConectar(), i);
 				if (!q_estado) {
@@ -186,9 +186,8 @@ public:
 
 				cout << endl << " INGRESE TELEFONO CORRECTO:   ";
 				cin >> telefono;
-				string ide = to_string(telefono);
 				string id = to_string(idcliente);
-				string update = "UPDATE empresa_c.cliente SET telefono = " + t + " WHERE(idcliente = " + id + ")";
+				string update = "UPDATE empresa_c.cliente SET telefono = '" + telefono + "' WHERE(idcliente = " + id + ")";
 				const char* i = update.c_str();
 				q_estado = mysql_query(cn.getConectar(), i);
 				if (!q_estado) {
@@ -204,21 +203,6 @@ public:
 				getline(cin, correo_electronico);
 				string id = to_string(idcliente);
 				string update = "UPDATE empresa_c.cliente SET correo_electronico = '" + correo_electronico + "' WHERE(idcliente = " + id + ")";
-				const char* i = update.c_str();
-				q_estado = mysql_query(cn.getConectar(), i);
-				if (!q_estado) {
-					cout << "MODIFICADO CON EXITO .... \n";
-				}
-				else {
-					cout << "ERROR DE CONECCION.... \n";
-				}
-			}
-			else if (men == 7) {
-
-				cout << endl << " INGRESE LA FECHA Y HORA DE INGRESO (AAAA-MM-DD):   ";
-				getline(cin, fecha_ingreso);
-				string id = to_string(idcliente);
-				string update = "UPDATE empresa_c.cliente SET fecha_ingreso = '" + fecha_ingreso + "' WHERE(idcliente = " + id + ")";
 				const char* i = update.c_str();
 				q_estado = mysql_query(cn.getConectar(), i);
 				if (!q_estado) {
@@ -250,7 +234,7 @@ public:
 
 				string id = to_string(idcliente);
 
-				string update = "UPDATE empresa_c.cliente SET nombres = " + nombres + ", apellidos = '" + apellidos + "', NIT = '" + nit + "', genero = " + genero + ", teledono = " + t + ", correo_electronico = " + correo_electronico + ", fecha_ingreso = '" + fecha_ingreso + "' WHERE(idcliente = " + id + ")"; const char* i = update.c_str();
+				string update = "UPDATE empresa_c.cliente SET nombres = '" + nombres + "', apellidos = '" + apellidos + "', NIT = '" + nit + "', genero = " + genero + ", teledono = '" + telefono + "', correo_electronico = '" + correo_electronico + "' WHERE(idcliente = " + id + ")"; const char* i = update.c_str();
 				q_estado = mysql_query(cn.getConectar(), i);
 				if (!q_estado) {
 					cout << "MODIFICADO CON EXITO .... \n";
