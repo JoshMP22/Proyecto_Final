@@ -46,7 +46,7 @@ public:
 
 		if (cn.getConectar()) {
 
-			string insertar = "INSERT INTO empresa_c.clientes(nombres, apellidos, NIT, genero, telefono, correo_electronico, fechaingreso) VALUES(" + nombres + ",'" + apellidos + "','" + NIT + "', " + genero + ", '" + telefono + "', '" + correo_electronico + "', current_time() )";
+			string insertar = "INSERT INTO empresa_c.clientes(nombres, apellidos, NIT, genero, telefono, correo_electronico, fechaingreso) VALUES(" + nombres + ",'" + apellidos + "','" + nit + "', " + genero + ", '" + telefono + "', '" + correo_electronico + "', current_time() )";
 			
 			const char* i = insertar.c_str();
 			q_estado = mysql_query(cn.getConectar(), i);
