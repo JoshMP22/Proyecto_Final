@@ -5,7 +5,7 @@
 #include<conio.h>
 #include<sstream>
 #include<Windows.h>
-#include "Conector.h"
+#include "Cliente.h"
 
 using namespace std;
 
