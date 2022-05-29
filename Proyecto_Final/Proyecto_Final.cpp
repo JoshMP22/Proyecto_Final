@@ -55,11 +55,13 @@ int main()
 
 			do {
 				system("cls");
-				cout << "           MENU CLIENTES" << endl;
+       				cout << "___________________________________________________________" << endl;
+        			cout << "       ********** MENU Clientes *********" << endl;
+        			cout << "___________________________________________________________" << endl;
 				cout << " 1. INGRESAR NUEVO CLIENTE" << endl;
 				cout << " 2. VER CLIENTES" << endl;
-				cout << " 3. MODIFICAR" << endl;
-				cout << " 4. ELIMINAR" << endl;
+				cout << " 3. MODIFICAR CLIENTE" << endl;
+				cout << " 4. ELIMINAR CLIENTE" << endl;
 				cout << " 0. SALIR" << endl;
 				cin >> men;
 
@@ -71,31 +73,64 @@ int main()
 					getline(cin, nom);
 					cout << " INGRESE APELLIDOS:         ";
 					getline(cin, ap);
-					cout << "INGRESE NIT:   ";
-					getline(cin, n);
 					cout << " INGRESE GENERO:   ";
 					cin >> gen;
-					cout << " INGRESE telefono:   ";
+					cout << " INGRESE TELEFONO:   ";
 					getline(cin, tel);
 					cout << "INGRESE CORREO ELECTRONICO:        ";
 					getline(cin, cor);
 					cout << "INGRESE FECHA DE INGRESO:        ";
 					getline(cin, fi);
+					cout << "INGRESE NIT:   ";
+					getline(cin, n);
 
-					//Cliente cl = Cliente(nom, ap, gen, tel,cor,fi, n);
-					//cl.crear();
+					Cliente cl = Cliente(idc, nom, ap, gen, tel,cor,fi, n);
+					cl.crear();
 
 
 				}
 				else if (men == 2) {
-					//MENU DE LEER
+					system("cls");
+            			Cliente cl = Cliente();
+            			pro.leer();
+
+            			system("pause");
 				}
 				else if (men == 3) {
-					//MENU DE ACTUALIZAR
-				}
-				else if (men == 4) {
-					//MENU DE ELIMINAR
-				}
+            char b = 's';
+
+            system("cls");
+            do {
+                cout << "INGRESE EL ID DEL CLIENTE QUE DESEA ACTUALIZAR: ";
+                cin >> idc;
+                cin.ignore();
+
+
+                Cliente cl = Cliente(idc, nom, ap, gen, tel,cor,fi, n);
+                cl.actualizar();
+
+                system("cls");
+                cout << "MODIFICAR OTRO CLIENTE (s/n): ";
+                cin >> b;
+                cin.ignore();
+
+            } while (b == 's' || b == 'S');
+
+        }
+				
+        else if (selec == 4) {
+
+            system("cls");
+            cout << "INGRESE EL ID DEL CLIENTE QUE DESEA ELIMINAR: ";
+                cin >> idc;
+                cin.ignore();
+
+
+                Cliente cl = Cliente(idc, nom, ap, gen, tel,cor,fi, n);
+                cl.eliminar();
+            system("pause");
+
+        }
 			} while (men != 0);
 		}
 
@@ -241,7 +276,7 @@ int main()
 					obj_compras = Compras_AIO(int_idcompra, NULL, NULL, "*", *intp_producto, *intp_cantidad, *fltp_precio);
 					obj_compras.Compras_AIO_ingreso(2);
 					int_i++;
-					cout << "\n\nDesea añadir una registro mas a la compra? s/n: ";
+					cout << "\n\nDesea aÃ±adir una registro mas a la compra? s/n: ";
 					cin >> chr_state;
 					if (chr_state == 'n' || chr_state == 'N') {
 						bol_stateo = false;
