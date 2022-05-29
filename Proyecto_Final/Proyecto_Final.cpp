@@ -2,8 +2,6 @@
 #include <string>
 #include <conio.h>
 #include <string.h>
-#include "Ventas_detalles.h" 
-#include "Cliente.h"
 #include "Compras_AIO.h"
 #include <cstdlib>
 
