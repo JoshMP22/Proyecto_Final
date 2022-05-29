@@ -14,11 +14,12 @@ private: string nit; int buscador = 0, idcliente = 0;
 public:
 	Cliente() {
 	}
-	Cliente(string nom, string ape, string gen, string tel, string ce, string fi, string n) : Persona(nom, ape, gen, tel, ce, fi) {
+	Cliente(int idc, string nom, string ape, string gen, string tel, string ce, string fi, string n) : Persona(nom, ape, gen, tel, ce, fi) {
 		nit = n;
+		idcliente = idc;
 	}
 
-	
+	void setidcliente(int idc ) { idcliente = idc; }
 	void setNit(string n) { nit = n; }
 	void setNombres(string nom) { nombres = nom; }
 	void setApellidos(string ape) { apellidos = ape; }
@@ -27,6 +28,8 @@ public:
 	void setCorreo_Electronico(string ce) { correo_electronico = ce; }
 	void setFecha_Ingreso(string fi) { fecha_ingreso = fi; }
 	
+	
+        int getidcliente() { return idcliente; }
 	string getNit() { return nit; }
 	string getNombres() { return nombres; }
 	string getApellidos() { return apellidos; }
