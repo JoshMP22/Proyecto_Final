@@ -2,7 +2,7 @@
 #include <mysql.h>
 #include <iostream>
 #include <string>
-#include "Conector.h"
+#include "Ventas_detalles.h"
 
 using namespace std;
 
@@ -34,7 +34,7 @@ public:
 
 
 	int Compras_AIO_max() {
-		//Función para devolver el idCompra del ultimo registro y utilizarlo al ingresar el detalle de compras
+		//FunciÃ³n para devolver el idCompra del ultimo registro y utilizarlo al ingresar el detalle de compras
 		obj_conexion.abrir_coneccion();
 		MYSQL_ROW fila;
 		MYSQL_RES* result;
@@ -158,11 +158,11 @@ public:
 				obj_conexion.cerrar_coneccion();
 			}
 			else {
-				cout << "Error: Por favor ingrese una combinación valida en la variable.";
+				cout << "Error: Por favor ingrese una combinaciÃ³n valida en la variable.";
 			}
 		}
 		else {
-			cout << "Error: Por favor ingrese una combinación valida en la opcion.";
+			cout << "Error: Por favor ingrese una combinaciÃ³n valida en la opcion.";
 		}
 	}
 
