@@ -5,7 +5,7 @@ class Persona
 {
 	
 protected: string nombres, apellidos, genero, correo_electronico, fecha_ingreso;
-		 int telefono = 0;
+		 string telefono = 0;
 
 protected:
 	Persona() {
