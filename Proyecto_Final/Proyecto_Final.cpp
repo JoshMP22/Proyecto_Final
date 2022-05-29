@@ -49,14 +49,14 @@ int main()
 
 		if (menu == 1) {
 
-			string nom, ap, n, tel, cor, fi;
-			int idc = 0, gen = 0;
+			string nom, ap, n, tel, cor, fi, gen;
+			int idc = 0;
 
 
 			do {
 				system("cls");
        				cout << "___________________________________________________________" << endl;
-        			cout << "       ********** MENU Clientes *********" << endl;
+        			cout << "       ********** MENU CLIENTES *********" << endl;
         			cout << "___________________________________________________________" << endl;
 				cout << " 1. INGRESAR NUEVO CLIENTE" << endl;
 				cout << " 2. VER CLIENTES" << endl;
@@ -74,7 +74,7 @@ int main()
 					cout << " INGRESE APELLIDOS:         ";
 					getline(cin, ap);
 					cout << " INGRESE GENERO:   ";
-					cin >> gen;
+					getline(cin, gen);
 					cout << " INGRESE TELEFONO:   ";
 					getline(cin, tel);
 					cout << "INGRESE CORREO ELECTRONICO:        ";
@@ -92,7 +92,7 @@ int main()
 				else if (men == 2) {
 					system("cls");
             			Cliente cl = Cliente();
-            			pro.leer();
+            			cl.leer();
 
             			system("pause");
 				}
@@ -118,7 +118,7 @@ int main()
 
         }
 				
-        else if (selec == 4) {
+        else if (men == 4) {
 
             system("cls");
             cout << "INGRESE EL ID DEL CLIENTE QUE DESEA ELIMINAR: ";
