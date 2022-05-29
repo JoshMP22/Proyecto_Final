@@ -42,12 +42,11 @@ public:
 
 		int q_estado;
 		Conector cn = Conector();
-		string t = to_string(telefono);
 		cn.abrir_coneccion();
 
 		if (cn.getConectar()) {
 
-			string insert = "INSERT INTO empresa_c.clientes(nombres, apellidos, NIT, genero, telefono, correo_electronico, fechaingreso) VALUES(" + nombres + ",'" + apellidos + "','" + NIT + "', " + genero + ", '" + telefono + "', '" + correo_electronico + "', current_time() )";
+			string insertar = "INSERT INTO empresa_c.clientes(nombres, apellidos, NIT, genero, telefono, correo_electronico, fechaingreso) VALUES(" + nombres + ",'" + apellidos + "','" + NIT + "', " + genero + ", '" + telefono + "', '" + correo_electronico + "', current_time() )";
 			
 			const char* i = insertar.c_str();
 			q_estado = mysql_query(cn.getConectar(), i);
@@ -103,7 +102,6 @@ public:
 		int q_estado;
 		int men = 0;
 		Conector cn = Conector();
-		string t = to_string(telefono);
 		cn.abrir_coneccion();
 		string bus = to_string(buscador);
 
