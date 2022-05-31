@@ -3,6 +3,7 @@
 #include <conio.h>
 #include <string.h>
 #include "Compras_AIO.h"
+#include"Trabajador.h"
 #include <cstdlib>
 
 using namespace std;
