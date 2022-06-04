@@ -2,15 +2,17 @@
 #include <mysql.h>
 #include <iostream>
 #include <string>
-#include "Ventas_detalles.h"
+#include <iomanip>
+//#include "Conector.h"
+#include "Marca.h"
 
 using namespace std;
-
 
 class Compras_AIO
 {
 protected:
 	Conector obj_conexion;
+	int int_test_return = 0;
 
 	int int_idcompra = 0, int_no_orden_compra = 0, int_idproveedor = 0;
 	string str_fecha_orden;
@@ -32,9 +34,12 @@ public:
 		flt_precio_costo_unitario = flt_pre;
 	}
 
+	string Compras_AIO_parte_menu() {
+		return "+--------------------------------------+\n|    1. COMPRAS                        |\n|    2. COMPRAS DETALLE                |\n|                                      |\n|  ELIGE UNA OPCION:                   |\n+--------------------------------------+\n";
+	}
 
 	int Compras_AIO_max() {
-		//FunciÃ³n para devolver el idCompra del ultimo registro y utilizarlo al ingresar el detalle de compras
+		//Función para devolver el idCompra del ultimo registro y utilizarlo al ingresar el detalle de compras
 		obj_conexion.abrir_coneccion();
 		MYSQL_ROW fila;
 		MYSQL_RES* result;
@@ -51,9 +56,13 @@ public:
 		obj_conexion.cerrar_coneccion();
 	}
 
+	int Compras_AIO_TryCatch() {
+		return int_test_return;
+	}
+
 	void Compras_AIO_ingreso(int int_fase) {
 		obj_conexion.abrir_coneccion();
-		//Fase 1 = Ingreso de Ventas; Fase 2 = Ingreso del detalle de ventas. 
+		//Fase 1 = Ingreso de Compras; Fase 2 = Ingreso del detalle de compras. 
 		string str_idCompra = to_string(int_idcompra);
 		int q_estado = 0;
 		if (int_fase == 1) {
@@ -63,6 +72,7 @@ public:
 			string insert_dat = "insert into compras (no_orden_compra, idProveedor, fecha_orden, fechaingreso) values (" + str_no_orden_compra + ", '" + str_idproveedor + "', '" + str_fecha_orden + "', NOW())";
 			const char* execute_insert = insert_dat.c_str();
 			q_estado = mysql_query(obj_conexion.getConectar(), execute_insert);
+			int_test_return = 1;
 		}
 		else if (int_fase == 2) {
 			string str_idproducto = to_string(int_idproducto);
@@ -72,17 +82,18 @@ public:
 			string insert_dat = "insert into compras_detalle (idCompra, idproducto, cantidad, precio_costo_unitario) values(" + str_idCompra + ", " + str_idproducto + ", '" + str_cantidad + "', " + str_precio_costo_unitario + ")";
 			const char* execute_insert = insert_dat.c_str();
 			q_estado = mysql_query(obj_conexion.getConectar(), execute_insert);
+			int_test_return = 1;
 		}
 		else {
 			cout << "\n\nError: Fase inexistente.\n\n";
+			system("pause");
 		}
 
-		if (!q_estado) {
-			cout << "\n\nValores registrados\n\n";
+		if (q_estado) {
+			cout << "\n\nError: " << mysql_error(obj_conexion.getConectar()) << endl;
+			int_test_return = 0;
 		}
-		else {
-			cout << "\n\nError: " << mysql_error(obj_conexion.getConectar());
-		}
+
 
 		obj_conexion.cerrar_coneccion();
 	}
@@ -128,20 +139,34 @@ public:
 						int i = 1;
 						result = mysql_store_result(obj_conexion.getConectar());
 						if (int_opcion == 1) {
-							cout << "No. | ID, No.Orden de Compra, Proveedor, FechaOrden, FechaIngreso" << endl;
+							cout << "=================================================================================" << endl;
+							cout << "======================================COMPRA=====================================" << endl;
+							cout << "+---+----+-----------------+----------------+-------------+---------------------+" << endl;
+							cout << "| # | ID | Orden de Compra |    Proveedor   | Fecha Orden |    Fecha Ingreso    |" << endl;
+							cout << "+---+----+-----------------+----------------+-------------+---------------------+" << endl;
 						}
 						else if (int_opcion == 2) {
-							cout << "No. | ID, ID-Compra, ID-Producto, Cantidad, PrecioUnitario |" << endl;
+							cout << "=================================================================================" << endl;
+							cout << "=================================DETALLE DE COMPRA===============================" << endl;
+							cout << "+---+----+-----------------+----------------+-------------+---------------------+" << endl;
+							cout << "| # | ID |    ID-Compra    |  ID-Producto   |   Cantidad  |    PrecioUnitario   |" << endl;
+							cout << "+---+----+-----------------+----------------+-------------+---------------------+" << endl;
 						}
 						while (fila = mysql_fetch_row(result)) {
 							if (int_opcion <= 2) {
-								cout << i << " | " << fila[0] << ", " << fila[1] << ", " << fila[2] << ", " << fila[3] << ", " << fila[4] << endl;
+								cout << "|" << setw(3) << i;
+								cout << "|" << setw(4) << fila[0];
+								cout << "|" << setw(17) << fila[1];
+								cout << "|" << setw(16) << fila[2];
+								cout << "|" << setw(13) << fila[3];
+								cout << "|" << setw(21) << fila[4]<<"|"<<endl;
 							}
 							else if (int_opcion == 3) {
 								cout << "Total: " << fila[0] << endl;
 							}
 							i++;
 						}
+						cout << "+---+----+-----------------+----------------+-------------+---------------------+" << endl;
 					}
 					else {
 						cout << "\n\nError: Por favor, ingrese un ID correcto.\n\n";
@@ -158,11 +183,11 @@ public:
 				obj_conexion.cerrar_coneccion();
 			}
 			else {
-				cout << "Error: Por favor ingrese una combinaciÃ³n valida en la variable.";
+				cout << "Error: Por favor ingrese una combinación valida en la variable.";
 			}
 		}
 		else {
-			cout << "Error: Por favor ingrese una combinaciÃ³n valida en la opcion.";
+			cout << "Error: Por favor ingrese una combinación valida en la opcion.";
 		}
 	}
 
@@ -212,8 +237,8 @@ public:
 		(str_id) = ID a actualizar.
 		(str_columna) = Columna a modificar sus registros.
 		(str_nuevo_valor) = Nuevo valor.
-		(int_tabla = 1) = Tabla Ventas.
-		(int_tabla = 2) = Tabla Ventas_detalle.
+		(int_tabla = 1) = Tabla Compras.
+		(int_tabla = 2) = Tabla Compras_detalle.
 		*/
 		string update_dat;
 		obj_conexion.abrir_coneccion();
@@ -234,9 +259,10 @@ public:
 			cout << "\n\nActualizado\n\n";
 		}
 		else {
-			cout << "\n\nError: " << mysql_error(obj_conexion.getConectar());
+			cout << "\n\nError: " << mysql_error(obj_conexion.getConectar())<< endl;
 		}
 		obj_conexion.cerrar_coneccion();
 	}
+
 };
 
