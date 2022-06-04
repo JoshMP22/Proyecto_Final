@@ -432,7 +432,7 @@ public:
 						gotoxy(64, 9); cout << fila[0]; gotoxy(68, 9); cout << fila[1]; gotoxy(97, 9); cout << fila[7]; gotoxy(100, 9); cout << fila[8];
 						gotoxy(63, 10); cout << "|__|____________________________|___|___________________|" << endl;
 						gotoxy(63, 12); cout << "|                                                       |" << endl;
-						gotoxy(63, 11); cout << "|  SEGURO QUE DESEA ELIMINAR ESTE CLIENTE:              |" << endl;
+						gotoxy(63, 11); cout << "|  SEGURO QUE DESEA ELIMINAR ESTE PRODUCTO:             |" << endl;
 						gotoxy(63, 12); cout << "|_______________________________________________________|" << endl;
 						gotoxy(112, 11); cin >> d; cin.ignore();
 					}
