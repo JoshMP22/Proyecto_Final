@@ -2,9 +2,9 @@
 #include <string>
 #include <conio.h>
 #include <string.h>
-#include "Compras_AIO.h"
-#include"Trabajador.h"
-#include <cstdlib>
+#include <Windows.h> 
+#include "Proveedores.h"
+#include <cstdlib> 
 
 using namespace std;
 
@@ -48,192 +48,308 @@ int main()
 
 		if (menu == 1) {
 
-			string nom, ap, n, tel, cor, fi, gen;
-			int idc = 0;
+			string nom, ap, n, tel, cor, fi;
+			int idc = 0, gen=0;
 
 
 			do {
 				system("cls");
-       				cout << "___________________________________________________________" << endl;
-        			cout << "       ********** MENU CLIENTES *********" << endl;
-        			cout << "___________________________________________________________" << endl;
-				cout << " 1. INGRESAR NUEVO CLIENTE" << endl;
-				cout << " 2. VER CLIENTES" << endl;
-				cout << " 3. MODIFICAR CLIENTE" << endl;
-				cout << " 4. ELIMINAR CLIENTE" << endl;
-				cout << " 0. SALIR" << endl;
-				cin >> men;
-
+       				cout << " ___________________________________________________________ " << endl;
+        			cout << "|           ********** MENU CLIENTES *********              |" << endl;
+        			cout << "|___________________________________________________________|" << endl;
+					cout << "|                                                           |" << endl;
+					cout << "|     1. INGRESAR NUEVO CLIENTE                             |" << endl;
+					cout << "|     2. VER CLIENTES                                       |" << endl;
+					cout << "|     3. MODIFICAR CLIENTE                                  |" << endl;
+					cout << "|     4. ELIMINAR CLIENTE                                   |" << endl;
+					cout << "|     0. SALIR                                              |" << endl;
+					cout << "|                                                           |" << endl;
+					cout << "|  ELIGE UNA OPCION:                                        |" << endl;
+					cout << "|___________________________________________________________|" << endl;
+					cout << "|                                                           |" << endl;
+					cout << "|                                                           |" << endl;
+					cout << "|___________________________________________________________|" << endl;
+					gotoxy(22,10); cin >> men;
+					cin.ignore();
+					
 				if (men == 1) {
 
-					cout << endl;
+					system("cls");
 
-					cout << " INGRESE NOMBRES:                ";
-					getline(cin, nom);
-					cout << " INGRESE APELLIDOS:         ";
-					getline(cin, ap);
-					cout << " INGRESE GENERO:   ";
-					getline(cin, gen);
-					cout << " INGRESE TELEFONO:   ";
-					getline(cin, tel);
-					cout << "INGRESE CORREO ELECTRONICO:        ";
-					getline(cin, cor);
-					cout << "INGRESE FECHA DE INGRESO:        ";
-					getline(cin, fi);
-					cout << "INGRESE NIT:   ";
-					getline(cin, n);
+					cout << " ____________________________________________________________ " << endl;
+					cout << "|               **** INGRESAR NUEVO CLIENTE ****             |" << endl;
+					cout << "|____________________________________________________________|" << endl;
+					cout << "|                                                            |" << endl;
+					cout << "|   NOMBRES:                                                 |" << endl;
+					cout << "|   APELLIDOS:                                               |" << endl;
+					cout << "|   NIT:                                                     |" << endl;
+					cout << "|   GENERO:                                                  |" << endl;
+					cout << "|   TELEFONO:                                                |" << endl;
+					cout << "|   CORREO ELECTRONICO:                                      |" << endl;
+					cout << "|                                                            |" << endl;
+					cout << "|____________________________________________________________|" << endl;
+					
+					gotoxy(28, 4); getline(cin, nom);
+					gotoxy(28, 5); getline(cin, ap);
+					gotoxy(28, 6); getline(cin, n);
+					gotoxy(28, 7); cin >> gen; cin.ignore();
+					gotoxy(28, 8); getline(cin, tel);
+					gotoxy(28, 9); getline(cin, cor);	
 
 					Cliente cl = Cliente(idc, nom, ap, gen, tel,cor,fi, n);
 					cl.crear();
-
-
+					system("pause");
 				}
 				else if (men == 2) {
 					system("cls");
             			Cliente cl = Cliente();
             			cl.leer();
 
-            			system("pause");
+						system("pause");
 				}
 				else if (men == 3) {
-            char b = 's';
-
-            system("cls");
-            do {
-                cout << "INGRESE EL ID DEL CLIENTE QUE DESEA ACTUALIZAR: ";
+				char b = 's';
+				int xc=3, yc=13;
+                do {
+				gotoxy(xc, yc); cout << "INGRESE EL ID DEL CLIENTE QUE DESEA ACTUALIZAR:  ";
                 cin >> idc;
                 cin.ignore();
-
 
                 Cliente cl = Cliente(idc, nom, ap, gen, tel,cor,fi, n);
                 cl.actualizar();
 
-                system("cls");
-                cout << "MODIFICAR OTRO CLIENTE (s/n): ";
-                cin >> b;
+				system("cls");
+				cout << "                  ____________________________________________________________ " << endl;
+				cout << "                 |                                                            |" << endl;
+				cout << "                 |   DESEA MODIFICAR OTRO CLIENTE (s/n):                      |" << endl;
+				cout << "                 |____________________________________________________________|" << endl;
+				cout << "                 |                                                            |" << endl;
+				cout << "                 |                                                            |" << endl;
+				cout << "                 |____________________________________________________________|" << endl;
+				gotoxy(59, 2); cin >> b;
                 cin.ignore();
-
+				xc = 20;
+				yc = 5;
             } while (b == 's' || b == 'S');
 
         }
 				
         else if (men == 4) {
 
-            system("cls");
-            cout << "INGRESE EL ID DEL CLIENTE QUE DESEA ELIMINAR: ";
+			gotoxy(3, 13); cout << "INGRESE EL ID DEL CLIENTE QUE DESEA ELIMINAR:  ";
                 cin >> idc;
                 cin.ignore();
 
 
                 Cliente cl = Cliente(idc, nom, ap, gen, tel,cor,fi, n);
                 cl.eliminar();
-            system("pause");
+				gotoxy(1,18); system("pause");
 
         }
 			} while (men != 0);
 		}
+
+
+		//menu Empleados
 		else if (menu == 2) {
-			int selec = 0, id = 0;
+			int selec = 0, idp = 0, ide = 0, gen=0;
 			char op = 's';
-			int ide;
-			string nom;
-			string ape;
-			string dir;
-			string tel, d, gen, fn, idp, fil, f;
+			string nom, ape, dir, tel, d, fn, fil, f;
 			int bus;
 
-			do {
-				system("cls");
-				cout << "___________________________________________________________" << endl;
-				cout << "       ********** MENU TRABAJADOR *********" << endl;
-				cout << "___________________________________________________________" << endl;
-				cout << "     1. INGRESE NUEVO TRABAJADOR" << endl;
-				cout << "     2. VER BASE DE DATOS DE TRABAJADOR" << endl;
-				cout << "     3. MODIFICAR DATOS DE TRABAJADOR" << endl;
-				cout << "     4. ELIMINAR TRABAJADOR" << endl;
-				cout << "     0. SALIR" << endl;
-				cin >> selec;
-				cin.ignore();
-
-				if (selec == 1) {
-					char op = 's';
+				do {
 					system("cls");
-
-					do {
-						cout << " INGRESE NOMBRE DEL EMPLEADO:                ";
-						getline(cin, nom);
-						cout << "INGRESE APELLIDO DEL EMPLEADO:         ";
-						getline(cin, ape);
-						cout << "INGRESE DIRECCION DEL EMPLEADO:   ";
-						getline(cin, dir);
-						cout << "INGRESE NUMERO DE TELEFONO:        ";
-						getline(cin, tel);
-						cout << "INGRESE DPI DEL EMPLEADO:   ";
-						getline(cin, d);
-						cout << "INGRESE GENERO DEL EMPLEADO:   ";
-						getline(cin, gen);
-						cout << "INGRESE FECHA DE NACIMIENTO DEL EMPLEADO:   ";
-						getline(cin, fn);
-						cout << "INGRESE PUESTO DEL EMPLEADO:   ";
-						getline(cin, idp);
-						cout << "INGRESE FECHA DE INGRESO DEL EMPLEADO:   ";
-						getline(cin, fil);
-
-
-						empleado pro = empleado(id, nom, ape, dir, tel, d, gen, fn, idp, fil);
-						pro.crear();
-						cout << endl << "DESEA INGRESAR OTRO PROVEEDOR (s/n):  ";
-						cin >> op;
-						cin.ignore();
-					} while (op == 's' || op == 'S');
-				}
-				else if (selec == 2) {
-					system("cls");
-					empleado  pro = empleado();
-					pro.leer();
-
-					system("pause");
-
-				}
-				else if (selec == 3) {
-
-					char b = 's';
-
-					system("cls");
-					do {
-						cout << "INGRESE EL ID DEL CLIENTE QUE DESEA ACTUALIZAR: ";
-						cin >> bus;
-						cin.ignore();
-
-
-						empleado pro = empleado(id, nom, ape, dir, tel, d, gen, fn, idp, fil);
-						pro.actualizar();
-
-						system("cls");
-						cout << "MODIFICAR OTRO PROVEEDOR (s/n): ";
-						cin >> b;
-						cin.ignore();
-
-					} while (b == 's' || b == 'S');
-
-				}
-				else if (selec == 4) {
-
-					system("cls");
-					cout << "INGRESE EL ID DEL PROVEEDOR QUE DESEA ELIMINAR: ";
-					cin >> id;
+					cout << " ___________________________________________________________ " << endl;
+					cout << "|            ********** MENU EMPLEADOS *********            |" << endl;
+					cout << "|___________________________________________________________|" << endl;
+					cout << "|                                                           |" << endl;
+					cout << "|     1. INGRESE NUEVO TRABAJADOR                           |" << endl;
+					cout << "|     2. VER BASE DE DATOS DE TRABAJADOR                    |" << endl;
+					cout << "|     3. MODIFICAR DATOS DE TRABAJADOR                      |" << endl;
+					cout << "|     4. ELIMINAR TRABAJADOR                                |" << endl;
+					cout << "|     0. SALIR                                              |" << endl;
+					cout << "|                                                           |" << endl;
+					cout << "|  ELIGE UNA OPCION:                                        |" << endl;
+					cout << "|___________________________________________________________|" << endl;
+					cout << "|                                                           |" << endl;
+					cout << "|                                                           |" << endl;
+					cout << "|___________________________________________________________|" << endl;
+					gotoxy(22, 10); cin >> men;
 					cin.ignore();
 
-					empleado pro = empleado(id, nom, ape, dir, tel, d, gen, fn, idp, fil);
-					pro.eliminar();
-					system("pause");
+					if (men == 1) {
 
-			
+						system("cls");
 
-			} while (selec != 0);
+						cout << " ____________________________________________________________ " << endl;
+						cout << "|               **** INGRESAR NUEVO EMPLEADO ****            |" << endl;
+						cout << "|____________________________________________________________|" << endl;
+						cout << "|                                                            |" << endl;
+						cout << "|   NOMBRES:                                                 |" << endl;
+						cout << "|   APELLIDOS:                                               |" << endl;
+						cout << "|   DIRECCION:                                               |" << endl;
+						cout << "|   NUMERO DE TELEFONO:                                      |" << endl;
+						cout << "|   DPI:                                                     |" << endl;
+						cout << "|   GENERO:                                                  |" << endl;
+						cout << "|   FECHA DE NACIMIENTO:                                     |" << endl;
+						cout << "|   ID DEL PUESTO:                                           |" << endl;
+						cout << "|   FECHA DE INICIO LABORALES:                               |" << endl;
+						cout << "|                                                            |" << endl;
+						cout << "|____________________________________________________________|" << endl;
 
+						gotoxy(28, 4); getline(cin, nom);
+						gotoxy(28, 5); getline(cin, ape);
+						gotoxy(28, 6); getline(cin, dir);
+						gotoxy(28, 7); getline(cin, tel); 
+						gotoxy(28, 8); getline(cin, d);
+						gotoxy(28, 9); cin >> gen; cin.ignore();
+						gotoxy(28, 10); getline(cin, fn); 
+						gotoxy(28, 11); cin >> idp; cin.ignore();
+						gotoxy(28, 12); getline(cin, fil);
+
+						empleado em = empleado(ide, nom, ape, dir, tel, d, gen, fn, idp, fil, f); 
+						em.crear();
+						system("pause"); 
+					}
+
+				else if (men == 2) {
+						
+						empleado em = empleado();
+						em.leer();
+						system("pause");
+				}
+
+				else if (men == 3) {
+						char b = 's';
+						int xc = 3, yc = 13;
+						do {
+							gotoxy(xc, yc); cout << "ID DEL EMPLEADO QUE DESEA ACTUALIZAR:  ";
+							cin >> ide;
+							cin.ignore();
+
+							empleado em = empleado(ide, nom, ape, dir, tel, d, gen, fn, idp, fil, f);
+							em.actualizar();
+
+							system("cls");
+							cout << "                  ____________________________________________________________ " << endl;
+							cout << "                 |                                                            |" << endl;
+							cout << "                 |   DESEA MODIFICAR OTRO EMPLEADO (s/n):                      |" << endl;
+							cout << "                 |____________________________________________________________|" << endl;
+							cout << "                 |                                                            |" << endl;
+							cout << "                 |                                                            |" << endl;
+							cout << "                 |____________________________________________________________|" << endl;
+							gotoxy(59, 2); cin >> b;
+							cin.ignore();
+							xc = 20;
+							yc = 5;
+						} while (b == 's' || b == 'S');
+
+					}
+				else if (men == 4) {
+
+						gotoxy(3, 13); cout << "INGRESE EL ID DEL CLIENTE QUE DESEA ELIMINAR:  ";
+						cin >> ide;	cin.ignore();
+
+					empleado em = empleado(ide, nom, ape, dir, tel, d, gen, fn, idp, fil, f);
+					em.eliminar();
+					gotoxy(1, 18); system("pause");
+				}
+			} while (men != 0);
 		}
 
+		//menu Puestos
+		else if (menu == 3) {
+		int selec = 0, idp = 0, ide = 0, gen = 0;
+		char op = 's';
+		string pues;
+		int bus=0;
+
+		do {
+			system("cls");
+			cout << " ___________________________________________________________ " << endl;
+			cout << "|           ********** MENU DE PUESTOS *********            |" << endl;
+			cout << "|___________________________________________________________|" << endl;
+			cout << "|                                                           |" << endl;
+			cout << "|     1. INGRESE NUEVO PUESTO                               |" << endl;
+			cout << "|     2. VER PUESTOS                                        |" << endl;
+			cout << "|     3. MODIFICAR PUESTO                                   |" << endl;
+			cout << "|     4. ELIMINAR PUESTO                                    |" << endl;
+			cout << "|     0. SALIR                                              |" << endl;
+			cout << "|                                                           |" << endl;
+			cout << "|  ELIGE UNA OPCION:                                        |" << endl;
+			cout << "|___________________________________________________________|" << endl;
+			cout << "|                                                           |" << endl;
+			cout << "|                                                           |" << endl;
+			cout << "|___________________________________________________________|" << endl;
+			gotoxy(22, 10); cin >> men;
+			cin.ignore();
+
+			if (men == 1) {
+
+				system("cls");
+
+				cout << " ____________________________________________________________ " << endl;
+				cout << "|                **** INGRESAR NUEVO PUESTO ****             |" << endl;
+				cout << "|____________________________________________________________|" << endl;
+				cout << "|                                                            |" << endl;
+				cout << "|   NOMBRE DEL PUESTO:                                       |" << endl;
+				cout << "|                                                            |" << endl;
+				cout << "|____________________________________________________________|" << endl;
+
+				gotoxy(28, 4); getline(cin, pues);
+				
+				puesto pu = puesto(idp,pues);
+				pu.crear();
+				system("pause");
+			}
+
+			else if (men == 2) {
+
+				puesto pu = puesto();
+				pu.leer();
+				system("pause");
+			}
+
+			else if (men == 3) {
+				char b = 's';
+				int xc = 3, yc = 13;
+				do {
+					gotoxy(xc, yc); cout << "ID DEL PUESTO QUE DESEA ACTUALIZAR:  ";
+					cin >> idp;
+					cin.ignore();
+
+					puesto pu = puesto(idp, pues);
+					pu.actualizar();
+
+					system("pause");
+					system("cls");
+					cout << "                  ____________________________________________________________ " << endl;
+					cout << "                 |                                                            |" << endl;
+					cout << "                 |   DESEA MODIFICAR OTRO PUESTO (s/n):                       |" << endl;
+					cout << "                 |____________________________________________________________|" << endl;
+					cout << "                 |                                                            |" << endl;
+					cout << "                 |                                                            |" << endl;
+					cout << "                 |____________________________________________________________|" << endl;
+					gotoxy(59, 2); cin >> b;
+					cin.ignore();
+					xc = 20;
+					yc = 5;
+				} while (b == 's' || b == 'S');
+
+			}
+			else if (men == 4) {
+
+				gotoxy(3, 13); cout << "INGRESE EL ID DEL PUESTO QUE DESEA ELIMINAR:  ";
+				cin >> idp;	cin.ignore();
+
+				puesto pu = puesto(idp, pues);
+				pu.eliminar();
+				gotoxy(1, 18); system("pause");
+			}
+		} while (men != 0);
+		}
+
+		//menu de ventas
 		else if (menu == 4) {
 			do {
 				int gen = 0, idc = 0, ide = 0, id = 0, c = 0, idp = 0, nfac = 0, idv = 0;
@@ -271,7 +387,7 @@ int main()
 					cout << "|____________________________________________________|" << endl;
 					gotoxy(31, 3); getline(cin, n);
 
-					Venta vn = Venta(idc, nom, ap, n, gen, tel, cor, fi, id, nfac, ser, f, ide, idp, can, pu, pt);
+					Venta vn = Venta(id, nom, ap, n, gen, tel, cor, fi, idc, nfac, ser, f, ide, idp, can, pu, pt);
 					vn.crear_Venta();
 
 				}
@@ -292,14 +408,13 @@ int main()
 					gotoxy(44, 10); cout << "|                                   |";
 					gotoxy(44, 11); cout << "|  QUE DESEA ACUTALIZAR:            |";
 					gotoxy(44, 12); cout << "|___________________________________|";
-					gotoxy(70, 11); cin >> de;
-					cin.ignore();
+					gotoxy(70, 11); cin >> de;	cin.ignore();
 
 					gotoxy(3, 12); cout << "INGRESE EL ID PARA MODIFICAR:    ";
-					cin >> id;
+					cin >> id; cin.ignore();
 
 					if (de == 1) {
-						Venta vn = Venta(id, nom, ap, n, gen, tel, cor, fi, idv, nfac, ser, f, ide, idp, can, pu, pt);
+						Venta vn = Venta(id, nom, ap, n, gen, tel, cor, fi, idc, nfac, ser, f, ide, idp, can, pu, pt);
 						vn.actualizar_Ventas();
 					}
 					else if (de == 2) {
@@ -310,14 +425,213 @@ int main()
 				else if (men == 4) {
 
 					gotoxy(3, 12); cout << "INGRESE EL ID A ELIMINAR:    ";
-					cin >> id;
+					cin >> id; cin.ignore();
 
-					Venta vn = Venta(id, nom, ap, n, gen, tel, cor, fi, id, nfac, ser, f, ide, idp, can, pu, pt);
+					Venta vn = Venta(id, nom, ap, n, gen, tel, cor, fi, idc, nfac, ser, f, ide, idp, can, pu, pt);
 					vn.eliminar_Venta();
 					gotoxy(3, 17); system("pause");
 				}
 			} while (men != 0);
 		}
+
+		//menu Productos
+		else if (menu == 5) {
+		int  idp = 0, idm = 0, exi = 0;
+		char op = 's';
+		string prod, desc, ima,f;
+		float pc = 0, pv=0;
+
+		do {
+			system("cls");
+			cout << " ___________________________________________________________ " << endl;
+			cout << "|           ********** MENU PRODUCTOS *********             |" << endl;
+			cout << "|___________________________________________________________|" << endl;
+			cout << "|                                                           |" << endl;
+			cout << "|     1. INGRESAR NUEVO PRODUCTO                            |" << endl;
+			cout << "|     2. VER PRODUCTOS                                      |" << endl;
+			cout << "|     3. MODIFICAR PRODUCTO                                 |" << endl;
+			cout << "|     4. ELIMINAR PRODUCTO                                  |" << endl;
+			cout << "|     0. SALIR                                              |" << endl;
+			cout << "|                                                           |" << endl;
+			cout << "|  ELIGE UNA OPCION:                                        |" << endl;
+			cout << "|___________________________________________________________|" << endl;
+			cout << "|                                                           |" << endl;
+			cout << "|                                                           |" << endl;
+			cout << "|___________________________________________________________|" << endl;
+			gotoxy(22, 10); cin >> men;
+			cin.ignore();
+
+			if (men == 1) {
+
+				system("cls");
+
+				cout << " ____________________________________________________________ " << endl;
+				cout << "|               **** INGRESAR NUEVO PRODUCTO ****            |" << endl;
+				cout << "|____________________________________________________________|" << endl;
+				cout << "|                                                            |" << endl;
+				cout << "|                                                            |" << endl;
+				cout << "|   NOMBRES DEL PRODUCTO:                                    |" << endl;
+				cout << "|   ID DE LA MARCA:                                          |" << endl;
+				cout << "|   DESCRIPCION:                                             |" << endl;
+				cout << "|   IMAGEN:                                                  |" << endl;
+				cout << "|   PRECIO COSTO:                                            |" << endl;
+				cout << "|   PRECIO VENTA:                                            |" << endl;
+				cout << "|   EXISTENCIA:                                              |" << endl;
+				cout << "|                                                            |" << endl;
+				cout << "|                                                            |" << endl;
+				cout << "|____________________________________________________________|" << endl;
+
+				gotoxy(28, 5); getline(cin, prod);
+				gotoxy(28, 6); cin >> idm; cin.ignore();
+				gotoxy(28, 7); getline(cin, desc);
+				gotoxy(28, 8); getline(cin, ima);
+				gotoxy(28, 9); cin >> pc; cin.ignore();
+				gotoxy(28, 10); cin >> pv; cin.ignore();
+				gotoxy(28, 11); cin >> exi; cin.ignore();
+
+				producto pr = producto(idp, prod, idm, desc, ima, pc, pv, exi, f);
+				pr.crear();
+				system("pause");
+			}
+
+			else if (men == 2) {
+
+				producto pr = producto();
+				pr.leer();
+				system("pause");
+			}
+
+			else if (men == 3) {
+				char b = 's';
+				int xc = 3, yc = 13;
+				do {
+					gotoxy(xc, yc); cout << "ID DEL PRODUCTO QUE DESEA ACTUALIZAR:  ";
+					cin >> idp;
+					cin.ignore();
+
+					producto pr = producto(idp, prod, idm, desc, ima, pc, pv, exi, f);
+					pr.actualizar();
+
+					system("cls");
+					cout << "                  ____________________________________________________________ " << endl;
+					cout << "                 |                                                            |" << endl;
+					cout << "                 |   DESEA MODIFICAR OTRO PRODUCTO (s/n):                      |" << endl;
+					cout << "                 |____________________________________________________________|" << endl;
+					cout << "                 |                                                            |" << endl;
+					cout << "                 |                                                            |" << endl;
+					cout << "                 |____________________________________________________________|" << endl;
+					gotoxy(59, 2); cin >> b;
+					cin.ignore();
+					xc = 20;
+					yc = 5;
+				} while (b == 's' || b == 'S');
+
+			}
+			else if (men == 4) {
+
+				gotoxy(3, 13); cout << "INGRESE EL ID DEL PRODUCTO QUE DESEA ELIMINAR:  ";
+				cin >> idp;	cin.ignore();
+
+				producto pr = producto(idp, prod, idm, desc, ima, pc, pv, exi, f);
+				pr.eliminar();
+				gotoxy(1, 18); system("pause");
+			}
+		} while (men != 0);
+		}
+
+		//menu Marcas
+		else if (menu == 6) {
+		int idm = 0;
+		char op = 's';
+		string marc;
+
+		do {
+			system("cls");
+			cout << " ___________________________________________________________ " << endl;
+			cout << "|             ********** MENU DE MARCA *********            |" << endl;
+			cout << "|___________________________________________________________|" << endl;
+			cout << "|                                                           |" << endl;
+			cout << "|     1. INGRESE NUEVA MARCA                                |" << endl;
+			cout << "|     2. VER MARCAS                                         |" << endl;
+			cout << "|     3. MODIFICAR MARCA                                    |" << endl;
+			cout << "|     4. ELIMINAR MARCA                                     |" << endl;
+			cout << "|     0. SALIR                                              |" << endl;
+			cout << "|                                                           |" << endl;
+			cout << "|  ELIGE UNA OPCION:                                        |" << endl;
+			cout << "|___________________________________________________________|" << endl;
+			cout << "|                                                           |" << endl;
+			cout << "|                                                           |" << endl;
+			cout << "|___________________________________________________________|" << endl;
+			gotoxy(22, 10); cin >> men;
+			cin.ignore();
+
+			if (men == 1) {
+
+				system("cls");
+
+				cout << " ____________________________________________________________ " << endl;
+				cout << "|                **** INGRESAR NUEVA MARCA ****              |" << endl;
+				cout << "|____________________________________________________________|" << endl;
+				cout << "|                                                            |" << endl;
+				cout << "|   NOMBRE DELA MARCA:                                       |" << endl;
+				cout << "|                                                            |" << endl;
+				cout << "|____________________________________________________________|" << endl;
+
+				gotoxy(28, 4); getline(cin, marc);
+
+				marca mar = marca(idm, marc);
+				mar.crear();
+				system("pause");
+			}
+
+			else if (men == 2) {
+
+				marca mar = marca();
+				mar.leer();
+				system("pause");
+			}
+
+			else if (men == 3) {
+				char b = 's';
+				int xc = 3, yc = 13;
+				do {
+					gotoxy(xc, yc); cout << "ID DELA MARCA QUE DESEA ACTUALIZAR:  ";
+					cin >> idm;
+					cin.ignore();
+
+					marca mar = marca(idm, marc);
+					mar.actualizar();
+
+					system("pause");
+					system("cls");
+					cout << "                  ____________________________________________________________ " << endl;
+					cout << "                 |                                                            |" << endl;
+					cout << "                 |   DESEA MODIFICAR OTRA MARCA (s/n):                        |" << endl;
+					cout << "                 |____________________________________________________________|" << endl;
+					cout << "                 |                                                            |" << endl;
+					cout << "                 |                                                            |" << endl;
+					cout << "                 |____________________________________________________________|" << endl;
+					gotoxy(59, 2); cin >> b;
+					cin.ignore();
+					xc = 20;
+					yc = 5;
+				} while (b == 's' || b == 'S');
+
+			}
+			else if (men == 4) {
+
+				gotoxy(3, 13); cout << "INGRESE EL ID DE LA MARCA QUE DESEA ELIMINAR:  ";
+				cin >> idm;	cin.ignore();
+
+				marca mar = marca(idm, marc);
+				mar.eliminar();
+				gotoxy(1, 18); system("pause");
+			}
+		} while (men != 0);
+		}
+
+
+		//MENU COMPRAS
 		else if (menu == 7) {
 		bool bol_state = false;
 		do {
@@ -429,7 +743,103 @@ int main()
 			system("pause");
 		} while (bol_state == false);
 		}
+		
+		//Menu Proveedores
+		else if (menu == 8) {
+		int  idp = 0;
+		char op = 's';
+		string prov, nit, dir, tel;
 
+		do {
+			system("cls");
+			cout << " ___________________________________________________________ " << endl;
+			cout << "|           ********** MENU PROVEEDOR *********             |" << endl;
+			cout << "|___________________________________________________________|" << endl;
+			cout << "|                                                           |" << endl;
+			cout << "|     1. INGRESAR NUEVO PROVEEDOR                           |" << endl;
+			cout << "|     2. VER PROVEEDORES                                    |" << endl;
+			cout << "|     3. MODIFICAR PROVEEDOR                                |" << endl;
+			cout << "|     4. ELIMINAR PROVEEDOR                                 |" << endl;
+			cout << "|     0. SALIR                                              |" << endl;
+			cout << "|                                                           |" << endl;
+			cout << "|  ELIGE UNA OPCION:                                        |" << endl;
+			cout << "|___________________________________________________________|" << endl;
+			cout << "|                                                           |" << endl;
+			cout << "|                                                           |" << endl;
+			cout << "|___________________________________________________________|" << endl;
+			gotoxy(22, 10); cin >> men;
+			cin.ignore();
+
+			if (men == 1) {
+
+				system("cls");
+
+				cout << " ____________________________________________________________ " << endl;
+				cout << "|              **** INGRESAR NUEVO PROVEEDOR ****            |" << endl;
+				cout << "|____________________________________________________________|" << endl;
+				cout << "|                                                            |" << endl;
+				cout << "|                                                            |" << endl;
+				cout << "|   NOMBRES DEL PROVEEDOR:                                   |" << endl;
+				cout << "|   NIT:                                                     |" << endl;
+				cout << "|   DIRECCION:                                               |" << endl;
+				cout << "|   TELEFONO:                                                |" << endl;
+				cout << "|                                                            |" << endl;
+				cout << "|____________________________________________________________|" << endl;
+
+				gotoxy(28, 5); getline(cin, prov);
+				gotoxy(28, 6); getline(cin, nit);
+				gotoxy(28, 7); getline(cin, dir);
+				gotoxy(28, 8); getline(cin, tel);
+
+				proveedor pro = proveedor(idp, prov, nit, dir, tel);
+				pro.crear();
+				system("pause");
+			}
+
+			else if (men == 2) {
+
+				proveedor pro = proveedor();
+				pro.leer();
+				system("pause");
+			}
+
+			else if (men == 3) {
+				char b = 's';
+				int xc = 3, yc = 13;
+				do {
+					gotoxy(xc, yc); cout << "ID DEL PROVEEDOR QUE DESEA ACTUALIZAR:  ";
+					cin >> idp;
+					cin.ignore();
+
+					proveedor pro = proveedor(idp, prov, nit, dir, tel);
+					pro.actualizar();
+
+					system("cls");
+					cout << "                  ____________________________________________________________ " << endl;
+					cout << "                 |                                                            |" << endl;
+					cout << "                 |   DESEA MODIFICAR OTRO PROVEEDOR (s/n):                    |" << endl;
+					cout << "                 |____________________________________________________________|" << endl;
+					cout << "                 |                                                            |" << endl;
+					cout << "                 |                                                            |" << endl;
+					cout << "                 |____________________________________________________________|" << endl;
+					gotoxy(59, 2); cin >> b;
+					cin.ignore();
+					xc = 20;
+					yc = 5;
+				} while (b == 's' || b == 'S');
+
+			}
+			else if (men == 4) {
+
+				gotoxy(3, 13); cout << "INGRESE EL ID DEL PROVEEDOR QUE DESEA ELIMINAR:  ";
+				cin >> idp;	cin.ignore();
+
+				proveedor pro = proveedor(idp, prov, nit, dir, tel);
+				pro.eliminar();
+				gotoxy(1, 18); system("pause");
+			}
+		} while (men != 0);
+		}
 
 	} while (menu != 0);
 
