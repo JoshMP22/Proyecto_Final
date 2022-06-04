@@ -5,7 +5,7 @@
 #include<conio.h>
 #include<sstream>
 #include<Windows.h>
-#include "Cliente.h"
+#include "Puesto.h"
 
 using namespace std;
 
@@ -22,8 +22,9 @@ protected:	 int idcliente = 0, genero = 0;
 
 public:
 	Venta() {} 
-	Venta(int idc, string nom, string ap, string n, int gen, string tel, string cor, string fi, int id, int nfac, string ser, string f, int ide, int idp, string can, float pu, float pt ) {
+	Venta(int id, string nom, string ap, string n, int gen, string tel, string cor, string fi, int idc, int nfac, string ser, string f, int ide, int idp, string can, float pu, float pt ) {
 		
+		idventa = id;
 		idcliente = idc;
 		nombre = nom;
 		apellido = ap;
@@ -32,7 +33,6 @@ public:
 		telefono = tel; 
 		correo = cor;
 		fechaingreso = fi;
-		idventa = id;
 		nofactura = nfac;
 		serie = ser;
 		fechafactura = f;
@@ -89,8 +89,6 @@ public:
 		dwPos.X = x;
 		dwPos.Y = y;
 		SetConsoleCursorPosition(hCon, dwPos);
-
-
 	}
 
 
@@ -243,7 +241,6 @@ public:
 					string idp = to_string(idproducto);
 					string nfac = to_string(f);
 					string ide = to_string(idempleado);
-
 
 					string insert = "INSERT INTO empresa_c.ventas(nofactura, serie, fechafactura, idcliente, idempleado, fechaingreso) VALUES(" + nfac + ",'" + serie + "', CURDATE(), 1," + ide + ",current_time() )";
 					const char* iii = insert.c_str();
@@ -530,8 +527,9 @@ public:
 
 	void leer_Ventas() {
 		int q_estado,q_stado;
-		int c = 0, ive=0, idve=0, cc=0;
+		int c = 0, ive=0, cc=0;
 		char d = 'n';
+		string imm = to_string(cc);
 
 		Conector cn = Conector();
 		MYSQL_ROW fila = 0;
@@ -565,18 +563,23 @@ public:
 					gotoxy(50, 6 + c); cin >> d;
 
 					if (d == 's' || d == 'S') {
+						
 						gotoxy(0, 7 + c); cout << " INGRESE ID DE LA VENTA: ___";
 						gotoxy(26, 7 + c); cin >> ive;
-						ive -= 1;
-						string consulta = "SELECT * FROM empresa_c.ventas";
+						
+						string consulta = "SELECT * FROM empresa_c.ventas_detalle";
 						const char* i = consulta.c_str();
 						q_estado = mysql_query(cn.getConectar(), i);
 
 						if (!q_estado) {
 							resultado = mysql_store_result(cn.getConectar());
 							while (fila = mysql_fetch_row(resultado)) {
+
+								imm = fila[1];
+								istringstream(imm) >> cc;
+
 								if (ive == cc) {
-									gotoxy(0,9+c); cout << " ______________________________________________________________ ";
+									gotoxy(0, 9 + c); cout << " ______________________________________________________________ ";
 									cout << "\n|                     DETALLES DE LA VENTA                     |";
 									cout << "\n|______________________________________________________________|";
 									cout << "\n|  ID  | ID VENTA | ID PRODUCTO |  CANTIDAD  | PRECIO UNITARIO |";
@@ -584,27 +587,15 @@ public:
 									cout << "\n|      |          |             |            |                 |";
 									cout << "\n|______|__________|_____________|____________|_________________|";
 
-									string consultad = "SELECT * FROM empresa_c.ventas_detalle";
-									const char* j = consultad.c_str();
-									q_stado = mysql_query(cn.getConectar(), j);
 
-									if (!q_stado) {
-										resultado = mysql_store_result(cn.getConectar());
-										while (fila = mysql_fetch_row(resultado)) {
-											if (ive == idve) {
-												gotoxy(4, 14 + c); cout << fila[0]; gotoxy(11, 14 + c); cout << fila[1]; gotoxy(23, 14 + c); cout << fila[2];
-												gotoxy(38, 14 + c); cout << fila[3]; gotoxy(50, 14 + c); cout << fila[4];
-											}
-											idve++;
-										}
-									}	
+									gotoxy(4, 14 + c); cout << fila[0]; gotoxy(11, 14 + c); cout << fila[1]; gotoxy(23, 14 + c); cout << fila[2];
+									gotoxy(38, 14 + c); cout << fila[3]; gotoxy(50, 14 + c); cout << fila[4];
 								}
-								cc++;
 							}
 						}
 					}
 					gotoxy(0, 16 + c); system("pause");
-					cc = 0;
+					
 					
 					
 				} while (d=='s'|| d=='S');
@@ -632,29 +623,29 @@ public:
 		Conector cn = Conector();
 
 		cn.abrir_coneccion();
-		string bus = to_string(idventa);
+		string id = to_string(idventa);
 
 		if (cn.getConectar()) {
 			system("cls");
 			cout << " ________________________________________________________________________ " << endl;
 			cout << "|                 ********** MENU ACTUALIZAR **********                  |" << endl;
 			cout << "|________________________________________________________________________|" << endl;
+			cout << "|                                                                        |" << endl;
 			cout << "|         1. No. FACTURA                                                 |" << endl;
 			cout << "|         2. SERIE DE FACTURA                                            |" << endl;
-			cout << "|         3. FECHA FACTURA                                               |" << endl;
-			cout << "|         4. ID CLIENTE                                                  |" << endl;
-			cout << "|         5. ID EMPLEADO                                                 |" << endl;
-			cout << "|         6. FECHA DE INGRESO                                            |" << endl;
-			cout << "|         7. TODOS LOS CAMPOS                                            |" << endl;
+			cout << "|         3. ID CLIENTE                                                  |" << endl;
+			cout << "|         4. ID EMPLEADO                                                 |" << endl;
+			cout << "|         5. TODOS LOS CAMPOS                                            |" << endl;
 			cout << "|                                                                        |" << endl;
-			cout << "|                  QUE CAMPO DESEA MODIFICAR:   _____                    |" << endl;
-			cout << "|________________________________________________________________________|" << endl;
-			cout << "|                                                                        |" << endl;
-			cout << "|                                                                        |" << endl;
-			cout << "|                                                                        |" << endl;
+			cout << "|                  QUE CAMPO DESEA MODIFICAR:                            |" << endl;
 			cout << "|                                                                        |" << endl;
 			cout << "|________________________________________________________________________|" << endl;
-			gotoxy(50,11); cin >> men;
+			cout << "|                                                                        |" << endl;
+			cout << "|                                                                        |" << endl;
+			cout << "|                                                                        |" << endl;
+			cout << "|                                                                        |" << endl;
+			cout << "|________________________________________________________________________|" << endl;
+			gotoxy(50,10); cin >> men;
 			cin.ignore();
 
 			if (men == 1) {
@@ -690,23 +681,8 @@ public:
 				}
 			}
 
+
 			else if (men == 3) {
-
-				gotoxy(03, 14); cout << "    INGRESE LA FECHA DE LA FACTURA (AAAA-MM-DD):   ";
-				getline(cin, fechafactura);
-				string id = to_string(idventa);
-				string update = "UPDATE empresa_c.ventas SET fechafactura = '" + fechafactura + "' WHERE(idVenta = " + id + ")";
-				const char* i = update.c_str();
-				q_estado = mysql_query(cn.getConectar(), i);
-				if (!q_estado) {
-					gotoxy(03, 16);  cout << "                       MODIFICADO CON EXITO" << endl << endl;
-				}
-				else {
-					gotoxy(03, 16);  cout << "              **** ERROR DE CONECCION ****" << endl << endl;
-				}
-			}
-
-			else if (men == 4) {
 
 				gotoxy(04, 14); cout << "       INGRESE EL ID DEL CLIENTE:   ";
 				cin >> idcliente;
@@ -722,7 +698,7 @@ public:
 					gotoxy(03, 16);  cout << "               **** ERROR DE CONECCION ****" << endl << endl;
 				}
 			}
-			else if (men == 5) {
+			else if (men == 4) {
 
 				gotoxy(04, 14); cout << "        INGRESE EL ID DEL EMPLEADO:   ";
 				cin >> idempleado;
@@ -738,48 +714,28 @@ public:
 					gotoxy(03, 16);  cout << "               **** ERROR DE CONECCION ****" << endl << endl;
 				}
 			}
-			else if (men == 6) {
+			
 
-				gotoxy(02, 14); cout << "INGRESE LA FECHA Y HORA DE INGRESO (AAAA-MM-DD):   __________ ________";
-				gotoxy(53, 14); getline(cin, fechaingreso);
-				string id = to_string(idventa);
-				string update = "UPDATE empresa_c.ventas SET fechaingreso = '" + fechaingreso + "' WHERE(idVenta = " + id + ")";
-				const char* i = update.c_str();
-				q_estado = mysql_query(cn.getConectar(), i);
-				if (!q_estado) {
-					gotoxy(03, 16);  cout << "              MODIFICADO CON EXITO" << endl << endl;
-				}
-				else {
-					gotoxy(03, 16);  cout << "       **** ERROR DE CONECCION ****" << endl << endl;
-				}
-			}
-
-
-			else if (men == 7) {
+			else if (men == 5) {
 				system("cls");
 				cout << " ______________________________________________________ " << endl;
 				cout << "|              **** CAMPOS A MODIFICAR ****            |" << endl;
 				cout << "|______________________________________________________|" << endl;
 				cout << "|                                                      |" << endl;
+				cout << "|                                                      |" << endl;
 				cout << "|   NUMERO DE FACUTA:                                  |" << endl;
 				cout << "|   SERIE DE LA FACTURA:                               |" << endl;
-				cout << "|   FECHA DE LA FACTURA:                               |" << endl;
 				cout << "|   ID DEL CLIENTE:                                    |" << endl;
 				cout << "|   ID DEL EMPLEADO:                                   |" << endl;
-				cout << "|   FECHA DE INGRESO:                                  |" << endl;
+				cout << "|                                                      |" << endl;
 				cout << "|______________________________________________________|" << endl;
 				cout << "|                                                      |" << endl;
 				cout << "|                                                      |" << endl;
 				cout << "|______________________________________________________|" << endl;
-				gotoxy(28, 4); cin >> nofactura;
-				cin.ignore();
-				gotoxy(28, 5); getline(cin, serie);
-				gotoxy(28, 6); getline(cin, fechafactura);
-				gotoxy(28, 7); cin >> idcliente;
-				cin.ignore();
-				gotoxy(28, 8); cin >> idempleado;
-				cin.ignore();
-				gotoxy(28, 9); getline(cin, fechaingreso);
+				gotoxy(28, 5); cin >> nofactura; cin.ignore();
+				gotoxy(28, 6); getline(cin, serie);
+				gotoxy(28, 7); cin >> idcliente; cin.ignore();
+				gotoxy(28, 8); cin >> idempleado; cin.ignore();
 
 				string nfac = to_string(nofactura);
 				string idc = to_string(idcliente);
@@ -787,7 +743,7 @@ public:
 				string id = to_string(idventa);
 
 
-				string update = "UPDATE empresa_c.ventas SET nofactura = " + nfac + ", serie = '" + serie + "', fechafactura = '" + fechafactura + "', idcliente = " + idc + ", idempleado= " + ide + ", fechaingreso= '" + fechaingreso + "' WHERE(idVenta= " + id + ")";
+				string update = "UPDATE empresa_c.ventas SET nofactura = " + nfac + ", serie = '" + serie + "',  idcliente = " + idc + ", idempleado= " + ide + "  WHERE(idVenta= " + id + ")";
 				const char* i = update.c_str();
 				q_estado = mysql_query(cn.getConectar(), i);
 				if (!q_estado) {
@@ -810,87 +766,93 @@ public:
 
 	}
 
+
 	void eliminar_Venta() {
 
-		int q_estado, q_stado;
-		char d = 'n';
-		int c = 1, ive=0;
+		int q_estado, q_stado, con = 1;
+		char d = 'z';
+		string imm = to_string(con);
 
 		Conector cn = Conector();
-		MYSQL_ROW fila = 0;
-		MYSQL_RES* resultado = 0;
-		cn.abrir_coneccion();
+		MYSQL_ROW fila;
+		MYSQL_RES* resultado;
 
 		cn.abrir_coneccion();
 		string id = to_string(idventa);
+
 		if (cn.getConectar()) {
 
-			string consultad = "SELECT * FROM empresa_c.ventas";
-			const char* j = consultad.c_str();
-			q_stado = mysql_query(cn.getConectar(), j);
-
-			if (!q_stado) {
+			string consulta = "SELECT * FROM empresa_c.ventas";
+			const char* c = consulta.c_str();
+			q_estado = mysql_query(cn.getConectar(), c);
+			if (!q_estado) {
 				resultado = mysql_store_result(cn.getConectar());
 				while (fila = mysql_fetch_row(resultado)) {
-					if (idventa == c) {
+
+					imm = fila[0];
+					istringstream(imm) >> con;
+
+					if (idventa == con) {
+
 						gotoxy(44, 4); cout << " __________________________________________________________________ " << endl;
 						gotoxy(44, 5); cout << "|                  ********* VENTAS *********                      |" << endl;
 						gotoxy(44, 6); cout << "|__________________________________________________________________|" << endl;
 						gotoxy(44, 7); cout << "| ID | NO | SERIE | FECHA FACTURA | ID | ID |     FECHA INGRESO    |" << endl;
-						gotoxy(44, 7); cout << "| ID |FACT| SERIE | FECHA FACTURA |CLIE|EMPL|     FECHA INGRESO    |" << endl;
+						gotoxy(44, 7); cout << "|    |FACT|       |               |CLIE|EMPL|                      |" << endl;
 						gotoxy(44, 8); cout << "|____|____|_______|_______________|____|____|______________________|" << endl;
 						gotoxy(44, 9); cout << "|    |    |       |               |    |    |                      |" << endl;
 						gotoxy(46, 9); cout << fila[0]; gotoxy(51, 9); cout << fila[1]; gotoxy(58, 9); cout << fila[2]; gotoxy(65, 9); cout << fila[3];
 						gotoxy(80, 9); cout << fila[4]; gotoxy(85, 9); cout << fila[5]; gotoxy(90, 9); cout << fila[6];
-						
+						gotoxy(44, 10); cout << "|____|____|_______|_______________|____|____|______________________|" << endl;
+						gotoxy(44, 11); cout << "|                                                                  |" << endl;
+						gotoxy(44, 12); cout << "|    SEGURO QUE DESE ELIMINAR ESTE REGISTRO (s/n):                 |" << endl;
+						gotoxy(44, 13); cout << "|__________________________________________________________________|" << endl;
+						gotoxy(97, 12); cin >> d; cin.ignore();
 					}
-						gotoxy(44, 10);cout << "|____|____|_______|_______________|____|____|______________________|" << endl;
-					c++;
 				}
 			}
 
-
-			gotoxy(44, 11);            cout << "|                                                                  |" << endl;
-			gotoxy(44, 12);            cout << "|          SEGURO QUE DESE ELIMINAR ESTE REGISTRO (s/n):           |" << endl;
-			gotoxy(44, 13);            cout << "|__________________________________________________________________|" << endl;
-			gotoxy(102, 12);	cin >> d;
-
 			if (d == 's' || d == 'S') {
-				string delite = "DELETE FROM empresa_c.ventas WHERE idVenta= " + id + "";
+				string delite = "DELETE FROM empresa_c.ventas WHERE idVenta = " + id + "";
 				const char* i = delite.c_str();
 				q_estado = mysql_query(cn.getConectar(), i);
 
 				if (!q_estado) {
 
-					gotoxy(0, 14); cout << "|                                        |" << endl;
+					gotoxy(0, 14); cout<< "|                                        |" << endl;
 					cout << "|          ELIMINADO CON EXITO           |" << endl;
 					cout << "|________________________________________|" << endl;
-
 
 				}
 				else {
 					gotoxy(0, 14); cout << "|                                        |" << endl;
 					cout << "|            ERROR AL ELIMINAR           |" << endl;
-					cout << "|________________________________________|" << endl; cout << "ERROR DE CONECCION.... \n";
+					cout << "|________________________________________|" << endl;
 				}
 			}
-			else {
+			else if (d == 'n' || d == 'N') {
 				gotoxy(0, 14); cout << "|                                        |" << endl;
-				cout << "|          CANCELADO CON EXITO           |" << endl;
-				cout << "|________________________________________|" << endl; cout << "ERROR DE CONECCION.... \n";
+				cout << "|           CANCELADO CON EXITO          |" << endl;
+				cout << "|________________________________________|" << endl;
 			}
+			else {
 
+				gotoxy(54, 4); cout << " ______________________________________________________ " << endl;
+				gotoxy(54, 5); cout << "|                                                      |" << endl;
+				gotoxy(54, 6); cout << "|           **** USUARIO NO ENCONTRADO ****            |" << endl;
+				gotoxy(54, 7); cout << "|______________________________________________________|" << endl;
+			}
 		}
 		else {
-			gotoxy(0, 14); cout << "|                                        |" << endl;
-			cout << "|           ERROR DE CONECCION           |" << endl;
-			cout << "|________________________________________|" << endl; cout << "ERROR DE CONECCION.... \n";
+			system("cls");
+			cout << "                  ____________________________________________________________ " << endl;
+			cout << "                 |                                                            |" << endl;
+			cout << "                 |                ***** ERROR DE CONECCION *****              |" << endl;
+			cout << "                 |____________________________________________________________|" << endl;
 		}
 		cn.cerrar_coneccion();
 
-
 	}
-
 
 };
 
