@@ -174,7 +174,7 @@ public:
 				q_estado = mysql_query(cn.getConectar(), i);
 				if (!q_estado) {
 					gotoxy(0, 17); cout << "|                                                          |" << endl;
-					cout << "|               *** MODIFICADO CON ESXITO ***              |" << endl;
+					cout << "|               *** MODIFICADO CON EXITO ***               |" << endl;
 					cout << "|__________________________________________________________|" << endl;
 				}
 				else {
@@ -195,7 +195,7 @@ public:
 				q_estado = mysql_query(cn.getConectar(), i);
 				if (!q_estado) {
 					gotoxy(0, 17); cout << "|                                                          |" << endl;
-					cout << "|               *** MODIFICADO CON ESXITO ***              |" << endl;
+					cout << "|               *** MODIFICADO CON EXITO ***               |" << endl;
 					cout << "|__________________________________________________________|" << endl;
 				}
 				else {
@@ -216,7 +216,7 @@ public:
 				q_estado = mysql_query(cn.getConectar(), i);
 				if (!q_estado) {
 					gotoxy(0, 17); cout << "|                                                          |" << endl;
-					cout << "|               *** MODIFICADO CON ESXITO ***              |" << endl;
+					cout << "|               *** MODIFICADO CON EXITO ***               |" << endl;
 					cout << "|__________________________________________________________|" << endl;
 				}
 				else {
@@ -240,7 +240,7 @@ public:
 				q_estado = mysql_query(cn.getConectar(), i);
 				if (!q_estado) {
 					gotoxy(0, 17); cout << "|                                                          |" << endl;
-					cout << "|               *** MODIFICADO CON ESXITO ***              |" << endl;
+					cout << "|               *** MODIFICADO CON EXITO ***               |" << endl;
 					cout << "|__________________________________________________________|" << endl;
 				}
 				else {
@@ -260,7 +260,7 @@ public:
 				q_estado = mysql_query(cn.getConectar(), i);
 				if (!q_estado) {
 					gotoxy(0, 17); cout << "|                                                          |" << endl;
-					cout << "|               *** MODIFICADO CON ESXITO ***              |" << endl;
+					cout << "|               *** MODIFICADO CON EXITO ***               |" << endl;
 					cout << "|__________________________________________________________|" << endl;
 				}
 				else {
@@ -280,7 +280,7 @@ public:
 				q_estado = mysql_query(cn.getConectar(), i);
 				if (!q_estado) {
 					gotoxy(0, 17); cout << "|                                                          |" << endl;
-					cout << "|               *** MODIFICADO CON ESXITO ***              |" << endl;
+					cout << "|               *** MODIFICADO CON EXITO ***               |" << endl;
 					cout << "|__________________________________________________________|" << endl;
 				}
 				else {
@@ -324,7 +324,7 @@ public:
 				q_estado = mysql_query(cn.getConectar(), i);
 				if (!q_estado) {
 					gotoxy(0, 12); cout << "|                                                            |" << endl;
-					cout << "|                *** MODIFICADO CON ESXITO ***               |" << endl;
+					cout << "|                *** MODIFICADO CON EXITO ***                |" << endl;
 					cout << "|____________________________________________________________|" << endl;
 				}
 				else {
