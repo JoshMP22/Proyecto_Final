@@ -4,13 +4,13 @@ using namespace std;
 class Persona
 {
 	
-protected: string nombres, apellidos, genero, correo_electronico, fecha_ingreso;
-		 string telefono = 0;
+protected: string nombres, apellidos, telefono, correo_electronico, fecha_ingreso;
+		 int genero;
 
 protected:
 	Persona() {
 	}
-	Persona(string nom, string ape, string gen, string tel, string ce, string fi) {
+	Persona(string nom, string ape, int gen, string tel, string ce, string fi) {
 		nombres = nom;
 		apellidos = ape;
 		genero = gen;
