@@ -1,20 +1,40 @@
-#pragma once
 #include <mysql.h>
 #include <iostream>
 #include <string>
-#include "Conector.h"
-using namespace  std;
-class Puesto {
+#include "Trabajador.h"
 
-private: string puesto; int buscador = 0, idpuesto = 0;
+using namespace  std;
+
+class puesto {
+
+private: string puestos;
+	   int idpuesto = 0;
 
 public:
-	Puesto() {}
-	Puesto(string p) {
-		puesto = p;
+	puesto() {}
+	puesto(int idp, string p) {
+
+		idpuesto = idp;
+		puestos = p;
 	}
-	void setPuesto(string p) { puesto = p; }
-	string getPuesto() { return puesto; }
+
+	void setIDPuesto(int idp) { idpuesto = idp; }
+	void setPuesto(string p) { puestos = p; }
+
+	int getIDPuesto() { return idpuesto; }
+	string getPuesto() { return puestos; }
+
+	void gotoxy(int x, int y) {
+		HANDLE hCon;
+		hCon = GetStdHandle(STD_OUTPUT_HANDLE);
+
+		COORD dwPos;
+		dwPos.X = x;
+		dwPos.Y = y;
+		SetConsoleCursorPosition(hCon, dwPos);
+	}
+
+
 
 	void crear() {
 		int q_estado;
@@ -23,25 +43,34 @@ public:
 		cn.abrir_coneccion();
 
 		if (cn.getConectar()) {
-			string  insertar = "INSERT INTO puestos(puesto) VALUES ('" + puesto + "')";
+			string  insertar = "INSERT INTO empresa_c.puestos(puesto) VALUES ('" + puestos + "')";
 			const char* i = insertar.c_str();
-			// executar el query
 			q_estado = mysql_query(cn.getConectar(), i);
+
 			if (!q_estado) {
-				cout << "Ingreso Exitoso ..." << endl;
+				gotoxy(0, 7); cout << "|                **** INGRESADO CON EXITO ****               |" << endl;
+				cout << "|____________________________________________________________|" << endl;
+
 			}
 			else {
-				cout << " xxx Error al Ingresar  xxx" << endl;
+				gotoxy(0, 7); cout << "|                ***** ERROR AL INGRESAR *****               |" << endl;
+				cout << "|____________________________________________________________|" << endl;
 			}
 		}
 		else {
-			cout << " xxx Error en la Conexion xxxx" << endl;
+
+			system("cls");
+			cout << "                  ____________________________________________________________ " << endl;
+			cout << "                 |                                                            |" << endl;
+			cout << "                 |                ***** ERROR DE CONECCION *****              |" << endl;
+			cout << "                 |____________________________________________________________|" << endl;
+
 		}
 		cn.cerrar_coneccion();
 	}
 
 	void leer() {
-		int q_estado;
+		int q_estado, i = 0;
 		Conector cn = Conector();
 		MYSQL_ROW fila;
 		MYSQL_RES* resultado;
@@ -49,28 +78,42 @@ public:
 
 		if (cn.getConectar()) {
 
-			cout << "------------ Datos de los Puestos ------------" << endl;
-			string consulta = "select * from puestos";
+			string consulta = "SELECT * FROM empresa_c.puestos";
 			const char* c = consulta.c_str();
 			q_estado = mysql_query(cn.getConectar(), c);
 			if (!q_estado) {
 				resultado = mysql_store_result(cn.getConectar());
+				system("cls");
+				cout << " __________________________________ " << endl;
+				cout << "|    BASE DE DATOS PUESTOS         |" << endl;
+				cout << "|__________________________________|" << endl;
+				cout << "|   ID    |         PUESTOS        |" << endl;
+				cout << "|_________|________________________|" << endl;
 				while (fila = mysql_fetch_row(resultado)) {
-					cout << fila[0] << "," << fila[1] << endl;
+					gotoxy(0, 5 + i); cout << "|         |                        |" << endl;
+					gotoxy(5, 5 + i); cout << fila[0]; gotoxy(15, 5 + i); cout << fila[1]; 
+					i++;
 				}
-
+				cout << "\n|_________|________________________|" << endl;
 			}
 			else {
-				cout << " xxx Error al Consultar  xxx" << endl;
+				system("cls");
+				cout << "                  ____________________________________________________________ " << endl;
+				cout << "                 |                                                            |" << endl;
+				cout << "                 |                ***** ERROR AL CONSULTAR *****              |" << endl;
+				cout << "                 |____________________________________________________________|" << endl;
 			}
 
 		}
 		else {
-			cout << " xxx Error en la Conexion xxxx" << endl;
+
+			system("cls");
+			cout << "                  ____________________________________________________________ " << endl;
+			cout << "                 |                                                            |" << endl;
+			cout << "                 |                ***** ERROR DE CONECCION *****              |" << endl;
+			cout << "                 |____________________________________________________________|" << endl;
 		}
 		cn.cerrar_coneccion();
-
-
 	}
 
 	void actualizar() {
@@ -79,71 +122,130 @@ public:
 		int men = 0;
 		Conector cn = Conector();
 		cn.abrir_coneccion();
-		string bus = to_string(buscador);
 
 		if (cn.getConectar()) {
 			system("cls");
-			cout << "   ********** MENU ACTUALIZAR ********** " << endl;
-			cout << " 1. Puesto" << endl;
-			cout << " COLOQUE 1 PARA MODIFICAR:  ";
-			cin >> men;
-			cin.ignore();
+			cout << " ____________________________________________________________ " << endl;
+			cout << "|                  **** ACTUALIZAR PUESTO ****               |" << endl;
+			cout << "|____________________________________________________________|" << endl;
+			cout << "|                                                            |" << endl;
+			cout << "|   NOMBRE DEL PUESTO:                                       |" << endl;
+			cout << "|                                                            |" << endl;
+			cout << "|____________________________________________________________|" << endl;
 
-			if (men == 1) {
+			gotoxy(28, 4); getline(cin, puestos);
 
-				cout << endl << " INGRESE EL PUESTO CORRECTO:   ";
-				getline(cin, puesto);
-				string id = to_string(idpuesto);
-				string update = "UPDATE empresa_c.puesto SET puesto = " + puesto + " WHERE(idpuesto = " + id + ")";
-				const char* i = update.c_str();
-				q_estado = mysql_query(cn.getConectar(), i);
-				if (!q_estado) {
-					cout << "MODIFICADO CON EXITO .... \n";
-				}
-				else {
-					cout << "ERROR DE CONECCION.... \n";
-				}
+			string id = to_string(idpuesto);
+
+			string update = "UPDATE empresa_c.puestos SET puesto = '" + puestos + "' WHERE(idPuesto = " + id + ")";
+			const char* i = update.c_str();
+			q_estado = mysql_query(cn.getConectar(), i);
+
+			if (!q_estado) {
+				gotoxy(0, 7); cout << "|               **** ACTUALIZADO CON EXITO ****              |" << endl;
+				cout << "|____________________________________________________________|" << endl;
+
+			}
+			else {
+				gotoxy(0, 7); cout << "|               ***** ERROR AL ACTUALIZAR *****              |" << endl;
+				cout << "|____________________________________________________________|" << endl;
 			}
 		}
 		else {
-			cout << "ERROR DE CONECCION.... \n";
-		}
-		system("pause");
-		cn.cerrar_coneccion();
 
+			system("cls");
+			cout << "                  ____________________________________________________________ " << endl;
+			cout << "                 |                                                            |" << endl;
+			cout << "                 |                ***** ERROR DE CONECCION *****              |" << endl;
+			cout << "                 |____________________________________________________________|" << endl;
+
+		}
+		cn.cerrar_coneccion();
 	}
 
 	void eliminar() {
 
-		int q_estado, q_stado;
-		/*int c = 1, r = 0, im = 0;
-		MYSQL_ROW fila = 0;
-		MYSQL_RES* resultado = 0;*/
+		int q_estado, q_stado, con = 1;
+		char d = 'z';
+		string imm = to_string(con);
 
 		Conector cn = Conector();
+		MYSQL_ROW fila;
+		MYSQL_RES* resultado;
+
 		cn.abrir_coneccion();
 		string id = to_string(idpuesto);
+
 		if (cn.getConectar()) {
 
-			string delite = "DELETE FROM empresa_c.puesto WHERE idpuesto = " + id + "";
-			const char* i = delite.c_str();
-			q_estado = mysql_query(cn.getConectar(), i);
-
+			string consulta = "SELECT * FROM empresa_c.puestos";
+			const char* c = consulta.c_str();
+			q_estado = mysql_query(cn.getConectar(), c);
 			if (!q_estado) {
+				resultado = mysql_store_result(cn.getConectar());
+				while (fila = mysql_fetch_row(resultado)) {
 
-				cout << "ELIMINADO CON EXITO .... \n";
+					imm = fila[0];
+					istringstream(imm) >> con;
+					
+					if (idpuesto == con) {
+						
+						gotoxy(64, 4); cout << " __________________________________ " << endl;
+						gotoxy(64, 5); cout << "|    BASE DE DATOS PUESTOS         |" << endl;
+						gotoxy(64, 6); cout << "|__________________________________|" << endl;
+						gotoxy(64, 7); cout << "|   ID    |         PUESTOS        |" << endl;
+						gotoxy(64, 8); cout << "|_________|________________________|" << endl;
+						gotoxy(64, 9); cout << "|         |                        |" << endl;
+						gotoxy(69, 9); cout << fila[0]; gotoxy(79, 9); cout << fila[1]; 
+						gotoxy(64, 10); cout << "|_________|________________________|" << endl;
+						gotoxy(64, 11); cout << "|                                  |" << endl;
+						gotoxy(64, 12); cout << "| DESEA ELIMINAR(s/n):             |" << endl;
+						gotoxy(64, 13); cout << "|__________________________________|" << endl;
+						gotoxy(92, 12); cin >> d; cin.ignore();
+					}
+				}
+			}
 
+			if (d == 's' || d == 'S') {
+				string delite = "DELETE FROM empresa_c.puestos WHERE idPuesto = " + id + "";
+				const char* i = delite.c_str();
+				q_estado = mysql_query(cn.getConectar(), i);
+
+				if (!q_estado) {
+
+					gotoxy(0, 15); cout << "|                                                           |" << endl;
+					cout << "|              ***** ELIMINADO CON EXITO *****              |" << endl;
+					cout << "|___________________________________________________________|" << endl;
+
+				}
+				else {
+					gotoxy(0, 13); cout << "|                                                           |" << endl;
+					cout << "|               ***** ERROR AL ELIMINAR *****               |" << endl;
+					cout << "|___________________________________________________________|" << endl;
+				}
+			}
+			else if (d == 'n' || d == 'N') {
+				gotoxy(0, 15); cout << "|                                                           |" << endl;
+				cout << "|              ***** CANCELADO CON EXITO *****              |" << endl;
+				cout << "|___________________________________________________________|" << endl;
 			}
 			else {
-				cout << "ERROR DE CONECCION.... \n";
+				
+				gotoxy(64, 4); cout << " ______________________________________________________ " << endl;
+				gotoxy(64, 5); cout << "|                                                      |" << endl;
+				gotoxy(64, 6); cout << "|           **** USUARIO NO ENCONTRADO ****            |" << endl;
+				gotoxy(64, 7); cout << "|______________________________________________________|" << endl;
 			}
 		}
-
 		else {
-			cout << "ERROR DE CONECCION.... \n";
+			system("cls");
+			cout << "                  ____________________________________________________________ " << endl;
+			cout << "                 |                                                            |" << endl;
+			cout << "                 |                ***** ERROR DE CONECCION *****              |" << endl;
+			cout << "                 |____________________________________________________________|" << endl;
 		}
 		cn.cerrar_coneccion();
 
-
 	}
 };
+
