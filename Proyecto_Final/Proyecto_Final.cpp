@@ -633,115 +633,196 @@ int main()
 
 		//MENU COMPRAS
 		else if (menu == 7) {
-		bool bol_state = false;
-		do {
-			system("cls");
-			cout << "+--------------------------------------+" << endl;
-			cout << "|        ****** COMPRAS ********       |" << endl;
-			cout << "+--------------------------------------+" << endl;
-			cout << "|    1. INGRESAR COMPRA                |" << endl;
-			cout << "|    2. MOSTRAR COMPRAS                |" << endl;
-			cout << "|    3. ACTUALIZAR COMPRA              |" << endl;
-			cout << "|    4. ELIMINAR COMPRA                |" << endl;
-			cout << "|    0. SALIR                          |" << endl;
-			cout << "|                                      |" << endl;
-			cout << "|  ELIGE UNA OPCION:                   |" << endl;
-			cout << "+--------------------------------------+" << endl;
-			gotoxy(23, 9); cin >> men;
-			system("cls");
-			if (men == 0) {
-				bol_state = true;
-			}
-			else if (men == 1) {
-				bool bol_stateo = true;
-				char chr_state;
-				int int_orden = 0, int_proveedor = 0, int_producto = 0, int_cantidad = 0, int_i = 1;
-				int* intp_orden = &int_orden, * intp_proveedor = &int_proveedor, * intp_producto = &int_producto, * intp_cantidad = &int_cantidad;
-				string str_feor;
-				string* strp_feor = &str_feor;
-				float flt_precio = 0;
-				float* fltp_precio = &flt_precio;
-
+			bool bol_state = false;
+			do {
+				system("cls");
 				cout << "+--------------------------------------+" << endl;
-				cout << "|    **** DATOS DE LA COMPRA *****     |" << endl;
+				cout << "|        ****** COMPRAS ********       |" << endl;
 				cout << "+--------------------------------------+" << endl;
-				cout << "|    NO DE ORDEN:                      |" << endl;
-				cout << "|    ID PROVEEDOR:                     |" << endl;
-				cout << "|    FECHA DE ORDEN:                   |" << endl;
-				cout << "+--------------------------------------+" << endl;
-				gotoxy(18, 3); cin >> *intp_orden;
-				gotoxy(19, 4); cin >> *intp_proveedor;
-				gotoxy(21, 5); cin >> *strp_feor;
-				int int_idcompra = obj_compras.Compras_AIO_max();
-				obj_compras = Compras_AIO(NULL, *intp_orden, *intp_proveedor, *strp_feor, NULL, NULL, NULL);
-				obj_compras.Compras_AIO_ingreso(1);
-				do {
-					system("cls");
-					cout << "+--------------------------------------+" << endl;
-					cout << "|     ** REGISTRO #" << int_i << " DE COMPRA ***     |" << endl;
-					cout << "+--------------------------------------+" << endl;
-					cout << "|    ID PRODUCTO:                      |" << endl;
-					cout << "|    CANTIDAD:                         |" << endl;
-					cout << "|    PRECIO UNITARIO:                  |" << endl;
-					cout << "+--------------------------------------+" << endl;
-					gotoxy(18, 3); cin >> *intp_producto;
-					gotoxy(15, 4); cin >> *intp_cantidad;
-					gotoxy(22, 5); cin >> *fltp_precio;
-					obj_compras = Compras_AIO(int_idcompra, NULL, NULL, "*", *intp_producto, *intp_cantidad, *fltp_precio);
-					obj_compras.Compras_AIO_ingreso(2);
-					int_i++;
-					cout << "\n\nDesea añadir una registro mas a la compra? s/n: ";
-					cin >> chr_state;
-					if (chr_state == 'n' || chr_state == 'N') {
-						bol_stateo = false;
-					}
-				} while (bol_stateo == true);
-				//delete [] intp_orden, delete [] intp_proveedor, delete [] intp_producto, delete [] intp_cantidad, delete [] strp_feor, delete [] fltp_precio;
-			}
-			else if (men == 2) {
-				int int_opcion = 0, int_variable = 1;
-				string str_id = "*";
-				cout << "+--------------------------------------+" << endl;
-				cout << "|      **** MOSTRAR COMPRAS ****       |" << endl;
-				cout << "+--------------------------------------+" << endl;
-				cout << "|    1. COMPRAS                        |" << endl;
-				cout << "|    2. DETALLE DE COMPRAS             |" << endl;
-				cout << "|    3. VER COMPRA Y DETALLE           |" << endl;
+				cout << "|    1. INGRESAR COMPRA                |" << endl;
+				cout << "|    2. MOSTRAR COMPRAS                |" << endl;
+				cout << "|    3. ACTUALIZAR COMPRA              |" << endl;
+				cout << "|    4. ELIMINAR COMPRA                |" << endl;
+				cout << "|    0. SALIR                          |" << endl;
 				cout << "|                                      |" << endl;
 				cout << "|  ELIGE UNA OPCION:                   |" << endl;
 				cout << "+--------------------------------------+" << endl;
-				gotoxy(21, 7); cin >> int_opcion;
-				if (int_opcion == 3) {
-					int_variable = 2;
-					int_opcion = 1;
-					gotoxy(0, 9);
-					cout << "|  ELIGE ID DE COMPRA:                 |" << endl;
-					cout << "+--------------------------------------+" << endl;
-					gotoxy(23, 9); cin >> str_id;
+				gotoxy(23, 9); cin >> men;
+				if (men >= 0 && men <5 ) {
+					system("cls");
 				}
-				system("cls");
-				obj_compras.Compras_AIO_mostrar(int_opcion, int_variable, str_id);
-			}
-			else if (men == 3) {
-				cout << "Por favor ingresa la actualizacion de forma manual..." << endl;
-				//(ID_a_actualizar, columna, nuevo_valor, tabla(1=Compras;2CompraDetalle=2)
-				//obj_compras.Compras_AIO_actualizar("7", "cantidad", "5", 2);
-			}
-			else if (men == 4) {
-				cout << "Por favor ingresa la eliminacion de forma manual..." << endl;
-				//(TablaCompra, TablaCompraDetalle)
-				//obj_compras.Compras_AIO_eliminar("2", 1);
-			}
-			else {
-				gotoxy(0, 11);
-				cout << "|  ELIGE UNA OPCION VALIDA             |" << endl;
-				cout << "+--------------------------------------+" << endl;
-			}
+				if (men == 0) {
+					bol_state = true;
+				}else if (men == 1) {
+					bool bol_stateo = true;
+					char chr_state;
+					int int_orden = 0, int_proveedor = 0, int_producto = 0, int_cantidad = 0, int_i = 1;
+					int* intp_orden = &int_orden, * intp_proveedor = &int_proveedor, * intp_producto = &int_producto, * intp_cantidad = &int_cantidad;
+					string str_feor;
+					string* strp_feor = &str_feor;
+					float flt_precio = 0;
+					float* fltp_precio = &flt_precio;
 
-			menu = 0;
-			gotoxy(0, 20);
-			system("pause");
-		} while (bol_state == false);
+					cout << "+--------------------------------------+" << endl;
+					cout << "|    **** DATOS DE LA COMPRA *****     |" << endl;
+					cout << "+--------------------------------------+" << endl;
+					cout << "|    NO DE ORDEN:                      |" << endl;
+					cout << "|    ID PROVEEDOR:                     |" << endl;
+					cout << "|    FECHA DE ORDEN:                   |" << endl;
+					cout << "+--------------------------------------+" << endl;
+					gotoxy(18, 3); cin >> *intp_orden;
+					gotoxy(19, 4); cin >> *intp_proveedor;
+					gotoxy(21, 5); cin >> *strp_feor;
+					obj_compras = Compras_AIO(NULL, *intp_orden, *intp_proveedor, *strp_feor, NULL, NULL, NULL);
+					obj_compras.Compras_AIO_ingreso(1);
+					if (obj_compras.Compras_AIO_TryCatch() == 1) {
+						int int_idcompra = obj_compras.Compras_AIO_max();
+						do {
+							system("cls");
+							cout << "+--------------------------------------+" << endl;
+							cout << "|     ** REGISTRO #" << int_i << " DE COMPRA ***     |" << endl;
+							cout << "+--------------------------------------+" << endl;
+							cout << "|    ID PRODUCTO:                      |" << endl;
+							cout << "|    CANTIDAD:                         |" << endl;
+							cout << "|    PRECIO UNITARIO:                  |" << endl;
+							cout << "+--------------------------------------+" << endl;
+							gotoxy(18, 3); cin >> *intp_producto;
+							gotoxy(15, 4); cin >> *intp_cantidad;
+							gotoxy(22, 5); cin >> *fltp_precio;
+							obj_compras = Compras_AIO(int_idcompra, NULL, NULL, "*", *intp_producto, *intp_cantidad, *fltp_precio);
+							obj_compras.Compras_AIO_ingreso(2);
+							int_i++;
+							cout << "\n\nDesea añadir una registro mas a la compra? s/n: ";
+							cin >> chr_state;
+							if (chr_state == 'n' || chr_state == 'N') {
+								bol_stateo = false;
+							}
+						} while (bol_stateo == true);
+					}
+					//delete [] intp_orden, delete [] intp_proveedor, delete [] intp_producto, delete [] intp_cantidad, delete [] strp_feor, delete [] fltp_precio;
+				}else if (men == 2) {
+					int int_opcion = 0, int_variable = 1;
+					string str_id = "*";
+					cout << "+--------------------------------------+" << endl;
+					cout << "|      **** MOSTRAR COMPRAS ****       |" << endl;
+					cout << "+--------------------------------------+" << endl;
+					cout << "|    1. COMPRAS                        |" << endl;
+					cout << "|    2. DETALLE DE COMPRAS             |" << endl;
+					cout << "|    3. VER COMPRA Y DETALLE           |" << endl;
+					cout << "|                                      |" << endl;
+					cout << "|  ELIGE UNA OPCION:                   |" << endl;
+					cout << "+--------------------------------------+" << endl;
+					gotoxy(21, 7); cin >> int_opcion;
+					if (int_opcion == 3) {
+						int_variable = 2;
+						int_opcion = 1;
+						gotoxy(0, 9);
+						cout << "|  ELIGE ID DE COMPRA:                 |" << endl;
+						cout << "+--------------------------------------+" << endl;
+						gotoxy(23, 9); cin >> str_id;
+					}
+					system("cls");
+					obj_compras.Compras_AIO_mostrar(int_opcion, int_variable, str_id);
+				}else if (men == 3) {
+					string str_id, str_columna, str_nuevo_valor, str_tabla;
+					int int_tabla = 0, int_columna = 0, int_status = 1;
+					cout << "+--------------------------------------+" << endl;
+					cout << "|    **** ACTUALIZAR COMPRAS ****      |" << endl;
+					cout << obj_compras.Compras_AIO_parte_menu();
+					gotoxy(21, 6); cin >> str_tabla; gotoxy(0, 8);
+					cout << "|         *** NO. COLUMNAS ***         |" << endl;
+					cout << "+--------------------------------------+" << endl;
+					if (str_tabla._Equal("1")) {
+						cout << "|    1. NO DE ORDEN                    |" << endl;
+						cout << "|    2. ID PROVEEDOR                   |" << endl;
+						cout << "|    3. FECHA DE ORDEN                 |" << endl;
+						int_tabla = 1;
+					}
+					else if (str_tabla._Equal("2")) {
+						cout << "|    1. ID PRODUCTO                    |" << endl;
+						cout << "|    2. CANTIDAD                       |" << endl;
+						cout << "|    3. PRECIO UNITARIO                |" << endl;
+						int_tabla = 2;
+					}
+					else {
+						cout << "\n\nError: Opcion invalida" << endl;
+						int_status = 0;
+					}
+
+					if (int_status == 1) {
+						cout << "+--------------------------------------+" << endl;
+						cout << "|    ID DE OBJETO:                     |" << endl;
+						cout << "|    COLUMNA A MODIFICAR:              |" << endl;
+						cout << "|    NUEVO VALOR:                      |" << endl;
+						cout << "+--------------------------------------+" << endl;
+						gotoxy(19, 14); cin >> str_id;
+						gotoxy(26, 15); cin >> int_columna;
+						gotoxy(18, 16); cin >> str_nuevo_valor;
+						if (int_tabla == 1) {
+							switch (int_columna)
+							{
+							case 1:
+								str_columna = "no_orden_compra";
+								break;
+							case 2:
+								str_columna = "idProveedor";
+								break;
+							case 3:
+								str_columna = "fecha_orden";
+								break;
+							default:
+								str_columna = "ERROR/COLUMNA";
+								break;
+							}
+						}
+						else if (int_tabla == 2) {
+							switch (int_columna)
+							{
+							case 1:
+								str_columna = "idproducto";
+								break;
+							case 2:
+								str_columna = "cantidad";
+								break;
+							case 3:
+								str_columna = "precio_costo_unitario";
+								break;
+							default:
+								str_columna = "ERROR/COLUMNA";
+								break;
+							}
+						}
+
+						obj_compras.Compras_AIO_actualizar(str_id, str_columna, str_nuevo_valor, int_tabla);
+					}
+					
+				}else if (men == 4) {
+					string str_id;
+					int int_tabla = 0;
+					try {
+						cout << "+--------------------------------------+" << endl;
+						cout << "|      **** ELIMINAR COMPRAS ****      |" << endl;
+						cout << obj_compras.Compras_AIO_parte_menu();
+						gotoxy(21, 6); cin >> int_tabla; gotoxy(0, 8);
+						cout << "|    ID A ELIMINAR:                    |" << endl;
+						cout << "+--------------------------------------+" << endl;
+						gotoxy(21, 8); cin >> str_id;
+						obj_compras.Compras_AIO_eliminar(str_id, int_tabla);
+					}
+					catch (exception e) {
+						cout << "\n\nError: Valor ingresado invalido"<< endl;
+					}
+				}
+				else {
+					gotoxy(0, 11);
+					cout << "|  ELIGE UNA OPCION VALIDA             |" << endl;
+					cout << "+--------------------------------------+" << endl;
+				}
+				
+				menu = 0;
+				gotoxy(0, 20);
+				system("pause");
+			} while (bol_state == false);
 		}
 		
 		//Menu Proveedores
