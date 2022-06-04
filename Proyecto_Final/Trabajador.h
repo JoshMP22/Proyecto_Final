@@ -121,7 +121,7 @@ public:
 				resultado = mysql_store_result(cn.getConectar());
 				system("cls");
 				cout << " ______________________________________________________________________________________________________________________ " << endl;
-				cout << "|                                              BASE DE DATOS DE CLIENTES                                               |" << endl;
+				cout << "|                                              BASE DE DATOS DE EMPLEADOS                                              |" << endl;
 				cout << "|______________________________________________________________________________________________________________________|" << endl;
 				cout << "|ID|     APELLIDOS       |        DIRECCION       | TELEFONO |      DPI        |GEN|  FECHA DE  |ID |   FECHA INICIO   |" << endl;
 				cout << "|  |                     |                        |          |                 |   | NACIMIENTO |PUE|     LABORES      |" << endl;
@@ -476,7 +476,7 @@ public:
 						gotoxy(64, 9); cout << "|  |                 |                   |             |" << endl;
 						gotoxy(65, 9); cout << fila[0]; gotoxy(69, 9); cout << fila[1]; gotoxy(87, 9); cout << fila[2]; gotoxy(107, 9); cout << fila[9];
 						gotoxy(64, 10); cout << "|__|_________________|___________________|_____________|" << endl; gotoxy(64, 12); cout << "|                                                    |" << endl;
-						gotoxy(64, 11); cout << "|  SEGURO QUE DESEA ELIMINAR ESTE CLIENTE:             |" << endl;
+						gotoxy(64, 11); cout << "|  SEGURO QUE DESEA ELIMINAR ESTE EMPLEADO:            |" << endl;
 						gotoxy(64, 12); cout << "|______________________________________________________|" << endl;
 						gotoxy(113, 11); cin >> d; cin.ignore();
 					}
