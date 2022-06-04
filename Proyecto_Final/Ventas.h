@@ -279,6 +279,12 @@ public:
 					if (!q_stado) {
 						resultado = mysql_store_result(cn.getConectar());
 
+						for (int hi = 0; hi <= 10; hi++) {
+							gotoxy(72, 2 + hi); cout << "                                               " << endl;
+						}
+
+
+
 						while (fila = mysql_fetch_row(resultado)) {
 
 							fechaingreso = fila[6];
@@ -493,6 +499,12 @@ public:
 
 						if (!q_stado) {
 							resultado = mysql_store_result(cn.getConectar());
+
+							for (int hi = 0; hi <= 10; hi++) {
+								gotoxy(72, 2+hi); cout<<"                                               " << endl;
+							}
+
+
 
 							while (fila = mysql_fetch_row(resultado)) {
 
