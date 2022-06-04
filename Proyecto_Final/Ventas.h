@@ -5,6 +5,7 @@
 #include<conio.h>
 #include<sstream>
 #include<Windows.h>
+#include <fstream>
 #include "Puesto.h"
 
 using namespace std;
@@ -118,11 +119,13 @@ public:
 	void crear_Venta() {
 
 		int q_estado, q_stado, q_estadon, c=1, c2=0, nn=0, f=0, ff=0, co=0; 
-		string rn, idcl, fac, ven, pu, prod;
+		string rn, idcl, fac, ven, pu, prod, npr;
 		float cant=0, total=0;
 		char x = 's';
 		char n[12], produc[100];
 	
+		ofstream oft_imprimir("Factura.txt");
+
 		MYSQL_ROW fila = 0;
 		MYSQL_RES* resultado = 0;
 		Conector cn = Conector();
@@ -137,7 +140,6 @@ public:
 			if (nit == "C/F" || nit == "c/f") {
 
 				gotoxy(13, 4); cout << "Consumidor Final";
-
 				gotoxy(3, 6); cout << "INGRESE ID EMPREADO: ";
 				gotoxy(24, 6); cin >> idempleado;
 				cin.ignore();
@@ -159,6 +161,19 @@ public:
 
 				Cuadro(72, 4, 118, 4);  Cuadro(72, 2, 118, 7);
 
+				oft_imprimir << "               UNIVERSIDAD MARIANO GALVES DE GUATEMALA" << endl;
+				oft_imprimir << "                            PROGRAMACION I" << endl;
+				oft_imprimir << "                       TAREA:  PROYECTO FINAL" << endl;
+				oft_imprimir << "                              GRUPO No. 4 " <<endl<< endl;
+				oft_imprimir << " __________________________________________________________________________";
+				oft_imprimir << "\n                          **** FACTURA ****" << endl;
+				oft_imprimir << " __________________________________________________________________________\n";
+				oft_imprimir << "  CODIGO            DETALLES                     PRECIO     PRECIO" << endl;
+				oft_imprimir << "                                                UNITARIO     TOTAL" << endl;
+				oft_imprimir << " __________________________________________________________________________"<<endl;
+				
+
+
 				do {
 					c = 1;
 
@@ -166,6 +181,7 @@ public:
 					gotoxy(103, 6);  cin >> idproducto;
 					cin.ignore();
 					gotoxy(2, 14 + c2);  cout << idproducto;
+					oft_imprimir << "\n   " << idproducto;
 
 					string consulta = "SELECT * FROM empresa_c.productos";
 					const char* j = consulta.c_str();
@@ -179,7 +195,7 @@ public:
 							if (c == idproducto) {
 								gotoxy(13, 14 + c2); cout << "  " << fila[1];
 								gotoxy(49, 14 + c2); cout << fila[6];
-								pu = fila[6];
+								npr = fila[1]; pu = fila[6];
 							}
 							c++;
 						}
@@ -188,6 +204,7 @@ public:
 					gotoxy(75, 6);  cout << "CANTIDAD DE PRODUTOS:_________________";
 					gotoxy(103, 6); getline(cin, cantidad);
 					gotoxy(13, 14 + c2); cout << cantidad;
+					oft_imprimir << "      " << cantidad << " " << npr << "                 " << pu;
 
 					string consultav = "SELECT * FROM empresa_c.ventas";
 					const char* ji = consultav.c_str();
@@ -267,7 +284,7 @@ public:
 
 					gotoxy(60, 14 + c2); cout << preciototal;
 					gotoxy(60, 24); cout << total;
-
+					oft_imprimir << "      " << preciototal;
 					gotoxy(75, 6); cout << "DESEA INGRESAR NUEVO PRODUCTO (s/n):  ";
 					gotoxy(111, 6); cin >> x;
 					cin.ignore();
@@ -284,7 +301,6 @@ public:
 						}
 
 
-
 						while (fila = mysql_fetch_row(resultado)) {
 
 							fechaingreso = fila[6];
@@ -293,14 +309,37 @@ public:
 					}
 					c2++;
 				} while (x == 's' || x == 'S');
+				
+				oft_imprimir << "\n __________________________________________________________________________\n";
+				oft_imprimir << "                                                         TOTAL:  " << total<<endl;
+				oft_imprimir << " __________________________________________________________________________\n";
+				oft_imprimir << "\n      No. FACUTRA: " << serie << f << "                       FECHA: " << fechaingreso;			
+				oft_imprimir << "\n\n      NIT: C/F" << endl;
+				oft_imprimir << "      NOMBRE: Consumidor Final" << endl;
+				oft_imprimir << "      DIRECCION: Ciudad" << endl;
+				oft_imprimir.close();
 
 				gotoxy(20, 2); cout << serie << f;
-				gotoxy(47, 2); cout << fechaingreso;
+				gotoxy(48, 2); cout << fechaingreso;
 				gotoxy(17, 4); cout << "C/F";
 				gotoxy(17, 5); cout << " Consumidor Final";
 				gotoxy(17, 6); cout << " Ciudad";
 				gotoxy(1, 29); system("pause");
-		
+				system("cls");
+				system("\n print /d:lpt2 Factura.txt"); //MANDAR A LLAMAR A LA IMPRESORA
+				char ar = 's';
+				cout << " __________________________________________________________________________________" << endl;
+				cout << "|            *********   LA IMPRESION INICIO CON EXITO  **********                 |" << endl;
+				cout << "|                                                                                  |" << endl;
+				cout << "|           DESEA ABRIR EL ARCHIVO 'Factura.txt'                                   |" << endl;
+				cout << "|           (s/n):                                                                 |" << endl;
+				cout << "|__________________________________________________________________________________|" << endl;
+				gotoxy(20, 5); cin >> ar;
+				if (ar == 's') {
+					system("C:\\Users\\morat\\source\\repos\\Proyecto_Final\\Proyecto_Final\\Factura.txt");
+				}
+				cout << "\n";
+				system("pause");
 			}
 
 
@@ -376,7 +415,17 @@ public:
 
 					Cuadro(72, 4, 118, 4);  Cuadro(72, 2, 118, 7);
 
-					
+					oft_imprimir << "               UNIVERSIDAD MARIANO GALVES DE GUATEMALA" << endl;
+					oft_imprimir << "                            PROGRAMACION I" << endl;
+					oft_imprimir << "                       TAREA:  PROYECTO FINAL" << endl;
+					oft_imprimir << "                              GRUPO No. 4 " << endl << endl;
+					oft_imprimir << " __________________________________________________________________________";
+					oft_imprimir << "\n                          **** FACTURA ****" << endl;
+					oft_imprimir << " __________________________________________________________________________\n";
+					oft_imprimir << "  CODIGO            DETALLES                     PRECIO     PRECIO" << endl;
+					oft_imprimir << "                                                UNITARIO     TOTAL" << endl;
+					oft_imprimir << " __________________________________________________________________________" << endl;
+										
 					do {
 						c = 1;
 						
@@ -384,6 +433,7 @@ public:
 						gotoxy(103, 6);  cin >> idproducto;
 						cin.ignore();
 						gotoxy(2, 14+c2);  cout << idproducto;
+						oft_imprimir << "\n   " << idproducto;
 						
 						string consulta = "SELECT * FROM empresa_c.productos";
 						const char* j = consulta.c_str();
@@ -397,7 +447,7 @@ public:
 								if (c == idproducto) {
 									gotoxy(13, 14+c2); cout <<"  " << fila[1];
 									gotoxy(49, 14+c2); cout << fila[6];
-									pu = fila[6];
+									npr = fila[1]; pu = fila[6];
 								}
 								c++;
 							}
@@ -406,6 +456,7 @@ public:
 						gotoxy(75, 6);  cout << "CANTIDAD DE PRODUTOS:_________________";
 						gotoxy(103, 6); getline(cin, cantidad);
 						gotoxy(13, 14+c2); cout << cantidad;
+						oft_imprimir << "      " << cantidad << " " << npr << "                 " << pu;
 
 						string consultav = "SELECT * FROM empresa_c.ventas";
 						const char* ji = consultav.c_str();
@@ -488,6 +539,7 @@ public:
 
 						gotoxy(60, 14+c2); cout << preciototal;
 						gotoxy(60, 24); cout << total;
+						oft_imprimir << "      " << preciototal;
 
 						gotoxy(75, 6); cout << "DESEA INGRESAR NUEVO PRODUCTO (s/n):  ";
 						gotoxy(111, 6); cin >> x;
@@ -515,12 +567,38 @@ public:
 						c2++;
 					} while (x == 's' || x == 'S');
 
+					oft_imprimir << "\n __________________________________________________________________________\n";
+					oft_imprimir << "                                                         TOTAL:  " << total << endl;
+					oft_imprimir << " __________________________________________________________________________\n";
+					oft_imprimir << "\n      No. FACUTRA: " << serie << f << "                       FECHA: " << fechaingreso;
+					oft_imprimir << "\n\n      NIT: "<<nit << endl;
+					oft_imprimir << "      NOMBRE: "<<nombre<<" "<<apellido << endl;
+					oft_imprimir << "      DIRECCION: Ciudad" << endl;
+					oft_imprimir.close();
+
 					gotoxy(20, 2); cout <<serie<< f;
-					gotoxy(47, 2); cout << fechaingreso;
+					gotoxy(48, 2); cout << fechaingreso;
 					gotoxy(17, 4); cout << nit;
 					gotoxy(17, 5); cout << nombre << " " << apellido;
-					gotoxy(17, 6); cout << " CIUDAD";
+					gotoxy(17, 6); cout << " Ciudad";
 					gotoxy(1, 29); system("pause");
+
+					system("cls");
+					system("\n print /d:lpt2 Factura.txt"); //MANDAR A LLAMAR A LA IMPRESORA
+					char ar = 's';
+					cout << " __________________________________________________________________________________" << endl;
+					cout << "|            *********   LA IMPRESION INICIO CON EXITO  **********                 |" << endl;
+					cout << "|                                                                                  |" << endl;
+					cout << "|           DESEA ABRIR EL ARCHIVO 'Factura.txt'                                   |" << endl;
+					cout << "|           (s/n):                                                                 |" << endl;
+					cout << "|__________________________________________________________________________________|" << endl;
+					gotoxy(20, 5); cin >> ar;
+					if (ar == 's') {
+						system("C:\\Users\\morat\\source\\repos\\Proyecto_Final\\Proyecto_Final\\Factura.txt");
+					}
+					cout << "\n";
+					system("pause");
+
 			}
 			else {
 			system("cls");
