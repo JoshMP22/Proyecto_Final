@@ -144,18 +144,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Cliente.cpp" />
-    <ClCompile Include="Compras.cpp" />
     <ClCompile Include="Conector.cpp" />
+    <ClCompile Include="Marca.cpp" />
     <ClCompile Include="Persona.cpp" />
+    <ClCompile Include="Productos.cpp" />
+    <ClCompile Include="Proveedores.cpp" />
     <ClCompile Include="Proyecto_Final.cpp" />
+    <ClCompile Include="Puesto.cpp" />
     <ClCompile Include="Ventas.cpp" />
     <ClCompile Include="Ventas_detalles.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cliente.h" />
-    <ClInclude Include="Compras.h" />
     <ClInclude Include="Conector.h" />
+    <ClInclude Include="Marca.h" />
     <ClInclude Include="Persona.h" />
+    <ClInclude Include="Productos.h" />
+    <ClInclude Include="Proveedores.h" />
+    <ClInclude Include="Puesto.h" />
     <ClInclude Include="Ventas.h" />
     <ClInclude Include="Ventas_detalles.h" />
   </ItemGroup>
